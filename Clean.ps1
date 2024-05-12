@@ -20,7 +20,8 @@ $packageNames = @(
     "Power Automate",
     "Microsoft To Do",
     "Movies & TV",
-    "Microsoft OneDrive"
+    "Microsoft OneDrive",
+    "Microsoft Solitaire Collection"
 )
 
 foreach ($packageName in $packageNames) {

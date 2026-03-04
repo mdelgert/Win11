@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File setup\entry.ps1

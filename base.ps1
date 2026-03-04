@@ -1,12 +1,13 @@
+# Requires -RunAsAdministrator
+# Base script for installing apps with winget.
+
 $timeout = [datetime]::Now.AddMinutes( 5 )
 $exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
 
 # Put Winget package IDs here
 $apps = @(
     'Microsoft.VisualStudioCode',
-    'Git.Git',
-    # 'Synology.ActiveBackupForBusinessAgent',
-    # 'Mozilla.Firefox',
+    'Git.Git'
 )
 
 while( $true ) {

@@ -12,6 +12,8 @@ Best-practice Windows 11 OpenSSH setup (Optional Feature) + GitHub keys
 - Opens firewall port 22
 
 Run as Administrator.
+
+https://github.com/mdelgert.keys
 #>
 
 param(

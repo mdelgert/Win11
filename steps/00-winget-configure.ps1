@@ -1,6 +1,9 @@
 # Requires -Version 5.1
 # Step: 00-winget-configure.ps1
 # Compatible with Windows PowerShell 5.1
+# https://learn.microsoft.com/en-us/windows/package-manager/configuration/
+# https://woshub.com/winget-dsc-configure/
+# https://learn.microsoft.com/en-us/windows/package-manager/configuration/create
 
 param(
     [Parameter(Mandatory=$true)][string]$RepoRoot,

@@ -75,7 +75,9 @@ if( -not (Test-Path -Path $sourceDir) ) {
 
 if( -not (Test-Path -Path $repoDir) ) {
     "Cloning ${repoUrl} to '${repoDir}' ..." | Write-Host
-    git clone $repoUrl $repoDir
+    $ErrorActionPreference = 'Continue'
+    git clone $repoUrl $repoDir 2>&1 | Write-Host
+    $ErrorActionPreference = 'Stop'
 
     if( $LASTEXITCODE -ne 0 ) {
         "git clone returned exit code $LASTEXITCODE" | Write-Warning
@@ -88,7 +90,7 @@ if( -not (Test-Path -Path $repoDir) ) {
 
 # Step 4 — Configure autologon and reboot
 "Configuring autologon for '${autologonUsername}' ..." | Write-Host
-Start-Process -FilePath $autologon `
+Start-Process $autologon `
     -ArgumentList "/accepteula $autologonUsername $autologonDomain $autologonPassword" `
     -Wait
 

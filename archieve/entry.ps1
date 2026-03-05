@@ -76,6 +76,12 @@ try {
     try {
       if (-not (Test-Path $cfgPath)) { throw "Missing config: $cfgPath" }
 
+      # Ensure WinGet DSC module is available (required for WinGetPackage resources)
+      if (-not (Get-Module -ListAvailable -Name Microsoft.WinGet.DSC)) {
+          Write-Host "Installing PowerShell module: Microsoft.WinGet.DSC ..."
+          Install-Module Microsoft.WinGet.DSC -Force -Scope AllUsers
+      }
+      
       # winget configure usage
       & $winget configure -f $cfgPath
       if ($LASTEXITCODE -ne 0) { throw "winget configure failed (exit $LASTEXITCODE)" }

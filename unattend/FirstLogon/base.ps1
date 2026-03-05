@@ -9,8 +9,8 @@ $exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
 
 # Put Winget package IDs here
 $apps = @(
-    'Microsoft.VisualStudioCode',
-    'Git.Git'
+    'Git.Git',
+    'Microsoft.Sysinternals.Autologon'
 )
 
 while( $true ) {
@@ -22,7 +22,8 @@ while( $true ) {
             & $exe install `
                 --exact --id $id `
                 --silent `
-                --accept-package-agreements --accept-source-agreements `
+                --accept-package-agreements `
+                --accept-source-agreements `
                 --source winget `
                 --scope machine
 

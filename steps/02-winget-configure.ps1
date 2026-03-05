@@ -5,6 +5,15 @@
 # https://woshub.com/winget-dsc-configure/
 # https://learn.microsoft.com/en-us/windows/package-manager/configuration/create
 
+Write-Host ""
+Write-Host "==============================="
+Write-Host "Running 02-winget-configure.ps1"
+Write-Host "Machine: $env:COMPUTERNAME"
+Write-Host "User: $env:USERNAME"
+Write-Host "Time: $(Get-Date)"
+Write-Host "==============================="
+Write-Host ""
+
 param(
     [Parameter(Mandatory=$true)][string]$RepoRoot,
     [switch]$WhatIf,

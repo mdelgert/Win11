@@ -16,6 +16,12 @@ properties:
         source: winget
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: Autologon
+      settings:
+        id: Microsoft.Sysinternals.Autologon
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: ActiveBackupForBusinessAgent
       settings:
         id: Synology.ActiveBackupForBusinessAgent
@@ -27,27 +33,5 @@ properties:
         id: gerardog.gsudo
         source: winget
 
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: Git
-    #   settings:
-    #     id: Git.Git
-    #     source: winget
 
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: Autologon
-    #   settings:
-    #     id: Microsoft.Sysinternals.Autologon
-    #     source: winget
-
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: Firefox
-    #   settings:
-    #     id: Mozilla.Firefox
-    #     source: winget
-  
-    # - resource: Microsoft.WinGet.DSC/WinGetPackage
-    #   id: Brave
-    #   settings:
-    #     id: Brave.Brave
-    #     source: winget
 

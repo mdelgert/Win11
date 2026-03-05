@@ -10,10 +10,6 @@ Windows 11 Scripts
 [WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
 [Automate Software and Settings Deployment with WinGet Configure (DSC)](https://woshub.com/winget-dsc-configure/)
 
-# Default users and passwords
-mdelgert:p@ssw0rd2026!
-elgertmd:p@ssw0rd2026!
-
 # Photo by Benjamin Voros on Unsplash. See https://unsplash.com/photos/snow-mountain-under-stars-phIFdC6lA4E for more info.
 $url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png';
 & {
@@ -24,3 +20,7 @@ $url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract
 # VM Config
 name: vm-unattend
 mem: 32768/4096
+
+# Default users and passwords
+mdelgert:p@ssw0rd2026!
+elgertmd:p@ssw0rd2026!

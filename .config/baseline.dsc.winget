@@ -32,6 +32,3 @@ properties:
       settings:
         id: gerardog.gsudo
         source: winget
-
-
-

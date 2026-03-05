@@ -2,10 +2,11 @@
 # clone.ps1
 # Compatible with Windows PowerShell 5.1
 # Requires -RunAsAdministrator
+# Step 2: Clone the repository and optionally run the setup script
 
 param(
     [string]$RepoUrl = "https://github.com/mdelgert/Win11.git",
-    [string]$SourceRoot = "C:\test",
+    [string]$SourceRoot = "C:\source",
     [string]$RepoName = "Win11",
     [switch]$RunSetup
 )

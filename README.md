@@ -6,3 +6,7 @@ Windows 11 Scripts
 [unattend-generator](https://github.com/cschneegans/unattend-generator)
 [WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
 [Automate Software and Settings Deployment with WinGet Configure (DSC)](https://woshub.com/winget-dsc-configure/)
+
+# Default users and passwords
+admin:p@ssw0rd2026!
+mdelgert:p@ssw0rd2026!   

@@ -2,6 +2,7 @@
 # autologon.ps1
 # Compatible with Windows PowerShell 5.1
 # Requires -RunAsAdministrator
+# Step 3: Enable autologon for the specified user and reboot the system
 
 $Username = "mdelgert"
 $Password = "p@ssw0rd2026!"
@@ -31,4 +32,4 @@ Start-Process $autologon `
     -ArgumentList "/accepteula $Username $Domain $Password" `
     -Wait
 
-#Restart-Computer -Force
+Restart-Computer -Force

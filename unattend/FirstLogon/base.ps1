@@ -90,7 +90,7 @@ if( -not (Test-Path -Path $repoDir) ) {
 
 # Step 4 — Configure autologon and reboot
 "Configuring autologon for '${autologonUsername}' ..." | Write-Host
-Start-Process $autologon `
+Start-Process -FilePath $autologon `
     -ArgumentList "/accepteula $autologonUsername $autologonDomain $autologonPassword" `
     -Wait
 

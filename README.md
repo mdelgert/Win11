@@ -8,5 +8,6 @@ Windows 11 Scripts
 [Automate Software and Settings Deployment with WinGet Configure (DSC)](https://woshub.com/winget-dsc-configure/)
 
 # Default users and passwords
-admin:p@ssw0rd2026!
-mdelgert:p@ssw0rd2026!   
+mdelgert:p@ssw0rd2026!
+elgertmd:p@ssw0rd2026!
+   

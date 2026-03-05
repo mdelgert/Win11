@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+# Requires -Version 5.1
 # Step: 00-winget-configure.ps1
 # Compatible with Windows PowerShell 5.1
 

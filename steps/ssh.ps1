@@ -1,4 +1,5 @@
-#Requires -Version 5.1
+# Requires -Version 5.1
+# Compatible with Windows PowerShell 5.1
 
 <#
 Best-practice Windows 11 OpenSSH setup (Optional Feature) + GitHub keys

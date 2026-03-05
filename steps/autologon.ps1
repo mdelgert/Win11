@@ -1,3 +1,6 @@
+#Requires -Version 5.1
+# autologon.ps1
+# Compatible with Windows PowerShell 5.1
 # Requires -RunAsAdministrator
 
 $Username = "mdelgert"
@@ -28,4 +31,4 @@ Start-Process $autologon `
     -ArgumentList "/accepteula $Username $Domain $Password" `
     -Wait
 
-Restart-Computer -Force
+#Restart-Computer -Force

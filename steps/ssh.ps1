@@ -1,3 +1,5 @@
+#Requires -Version 5.1
+
 <#
 Best-practice Windows 11 OpenSSH setup (Optional Feature) + GitHub keys
 

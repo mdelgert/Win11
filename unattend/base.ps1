@@ -1,5 +1,8 @@
+#Requires -Version 5.1
+# base.ps1
+# Compatible with Windows PowerShell 5.1
 # Requires -RunAsAdministrator
-# Base script for installing apps with winget.
+# Run this script first.
 
 $timeout = [datetime]::Now.AddMinutes( 5 )
 $exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"

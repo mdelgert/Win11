@@ -6,6 +6,8 @@ $AutologonExe    = "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.Sysint
 $RepoUrl         = "https://github.com/mdelgert/win11.git"
 $RepoDir         = "C:\source\win11"
 
+& $WingetExe configure --enable `
+
 & $WingetExe install Git.Git `
     --accept-package-agreements `
     --accept-source-agreements

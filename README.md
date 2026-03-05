@@ -20,3 +20,7 @@ $url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract
 	$ProgressPreference = 'SilentlyContinue';
 	( Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 30 ).Content;
 };
+
+# VM Config
+name: vm-unattend
+mem: 32768/4096

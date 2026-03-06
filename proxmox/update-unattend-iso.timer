@@ -1,0 +1,44 @@
+# File: /etc/systemd/system/update-unattend-iso.timer
+#
+# Purpose:
+#   Runs the unattend ISO updater on a schedule using systemd.
+#
+# Current schedule:
+#   OnCalendar=hourly
+#
+# Important option:
+#   Persistent=true
+#   This means if the server was off during a scheduled run,
+#   systemd will run it on the next boot.
+#
+# Install:
+#   nano /etc/systemd/system/update-unattend-iso.timer
+#
+# Reload and enable:
+#   systemctl daemon-reload
+#   systemctl enable --now update-unattend-iso.timer
+#
+# Verify timer:
+#   systemctl list-timers update-unattend-iso.timer
+#   systemctl status update-unattend-iso.timer
+#
+# Run service immediately without waiting for timer:
+#   systemctl start update-unattend-iso.service
+#
+# To change the schedule:
+#   hourly        = every hour
+#   daily         = once per day
+#   *:0/15        = every 15 minutes
+#   *:0/30        = every 30 minutes
+#
+
+[Unit]
+Description=Run unattend ISO updater hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=update-unattend-iso.service
+
+[Install]
+WantedBy=timers.target

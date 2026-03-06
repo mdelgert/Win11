@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -26,19 +26,34 @@ jobs:
           mkdir -p iso-root
           cp autounattend.xml iso-root/autounattend.xml
           echo "${GITHUB_REF_NAME}" > iso-root/version.txt
+
           genisoimage \
             -o unattend.iso \
             -J -R \
             iso-root
 
-      - name: Upload workflow artifact
+      - name: Generate version file
+        run: |
+          echo "${GITHUB_REF_NAME}" > unattend.version.txt
+
+      - name: Generate SHA256 checksum
+        run: |
+          sha256sum unattend.iso > unattend.iso.sha256
+
+      - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: unattend-iso
-          path: unattend.iso
+          name: unattend-files
+          path: |
+            unattend.iso
+            unattend.iso.sha256
+            unattend.version.txt
 
-      - name: Create GitHub release and attach ISO
+      - name: Create GitHub release and attach files
         uses: softprops/action-gh-release@v2
         with:
-          files: unattend.iso
+          files: |
+            unattend.iso
+            unattend.iso.sha256
+            unattend.version.txt
           generate_release_notes: true

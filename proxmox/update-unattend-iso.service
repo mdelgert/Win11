@@ -1,0 +1,36 @@
+# File: /etc/systemd/system/update-unattend-iso.service
+#
+# Purpose:
+#   Runs the unattend ISO update script one time when triggered.
+#
+# This service:
+#   - waits until network is online
+#   - runs /root/scripts/update-unattend-iso.sh as root
+#   - is intended to be triggered by update-unattend-iso.timer
+#
+# Install:
+#   nano /etc/systemd/system/update-unattend-iso.service
+#
+# Reload systemd after saving:
+#   systemctl daemon-reload
+#
+# Run manually:
+#   systemctl start update-unattend-iso.service
+#
+# Check status:
+#   systemctl status update-unattend-iso.service
+#
+# Check logs:
+#   journalctl -u update-unattend-iso.service -n 50 --no-pager
+#
+
+[Unit]
+Description=Update unattend Windows ISO from GitHub release
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/root/scripts/update-unattend-iso.sh
+User=root
+Group=root

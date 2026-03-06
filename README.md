@@ -9,6 +9,7 @@ Windows 11 Scripts
 [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall)
 [WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
 [Automate Software and Settings Deployment with WinGet Configure (DSC)](https://woshub.com/winget-dsc-configure/)
+[Any Burn](https://anyburn.com/download.php)
 
 # Photo by Benjamin Voros on Unsplash. See https://unsplash.com/photos/snow-mountain-under-stars-phIFdC6lA4E for more info.
 $url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png';

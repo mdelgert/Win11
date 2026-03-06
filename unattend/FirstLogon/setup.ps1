@@ -3,8 +3,8 @@ $ErrorActionPreference = 'Stop'
 
 $repoUrl     = 'https://github.com/mdelgert/win11.git'
 $repoRoot    = 'C:\source'
-$repoDir     = 'C:\source\win11'
-$setupScript = 'C:\source\win11\setup.ps1'
+$repoDir     = "$repoRoot\win11"
+$setupScript = "$repoDir\setup.ps1"
 
 function Wait-ForPath {
     param(

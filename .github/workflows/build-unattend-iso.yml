@@ -3,12 +3,14 @@ name: Build unattend.iso
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
-    paths:
-      - autounattend.xml
-      - .github/workflows/build-unattend-iso.yml
-      
+    tags:
+      - 'v*'
+    # branches:
+    #   - main
+    # paths:
+    #   - autounattend.xml
+    #   - .github/workflows/build-unattend-iso.yml
+    
 jobs:
   build:
     runs-on: ubuntu-latest

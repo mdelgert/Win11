@@ -1,7 +1,11 @@
 # Win11
 Windows 11 Scripts
 
+# Curl location
+curl -I -L https://github.com/mdelgert/win11/releases/latest/download/unattend.iso
+
 # Links
+[unattend.iso](https://github.com/mdelgert/win11/releases/latest/download/unattend.iso)
 [repo](https://github.com/mdelgert/Win11)
 [unattend-generator](https://schneegans.de/windows/unattend-generator/)
 [source](https://github.com/cschneegans/unattend-generator)

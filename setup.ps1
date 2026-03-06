@@ -29,9 +29,9 @@ $LogRoot      = "C:\Setup\logs"
 
 # Ordered list of steps to run (filenames only, executed in this exact order)
 $Steps = @(
-    "00-winget-upgrade.ps1"
     "01-autologon-download.ps1"
     "01-autologon-enable.ps1"
+    "00-winget-upgrade.ps1"
     "02-winget-configure-enable.ps1"
     "02-winget-configure-baseline.ps1"
     "03-vscodemenu.ps1"

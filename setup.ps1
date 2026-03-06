@@ -24,14 +24,14 @@ Set-StrictMode -Version Latest
 # ==========================
 # USER CONFIG (edit here)
 # ==========================
-$StepsDirName = "steps"
+$ScriptsDirName = "scripts"
 $LogRoot      = "C:\Setup\logs"
 
-# Ordered list of steps to run (filenames only, executed in this exact order)
-$Steps = @(
+# Ordered list of scripts to run (filenames only, executed in this exact order)
+$Scripts = @(
     "10-template.ps1"
-    "01-autologon-download.ps1"
-    # "01-autologon-enable.ps1"
+    "01-autologon-enable.ps1"
+    # "01-autologon-download.ps1"
     # "00-winget-upgrade.ps1"
     # "02-winget-configure-enable.ps1"
     # "02-winget-configure-baseline.ps1"
@@ -51,15 +51,26 @@ function Assert-Admin {
     }
 }
 
-function Ensure-Folder([string]$Path) {
-    if (-not (Test-Path -LiteralPath $Path)) {
+# function Ensure-Folder([string]$Path) {
+#     if (-not (Test-Path -LiteralPath $Path)) {
+#         New-Item -ItemType Directory -Path $Path -Force | Out-Null
+#     }
+# }
+
+function New-FolderIfMissing {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    if (-not (Test-Path -Path $Path)) {
         New-Item -ItemType Directory -Path $Path -Force | Out-Null
     }
 }
 
-function Write-Header([string]$RepoRoot, [string]$StepsDir, [string]$LogFile) {
+function Write-Header([string]$RepoRoot, [string]$ScriptsDir, [string]$LogFile) {
     Write-Host "RepoRoot: $RepoRoot"
-    Write-Host "StepsDir: $StepsDir"
+    Write-Host "StepsDir: $ScriptsDir"
     Write-Host "LogFile:  $LogFile"
     Write-Host ("PowerShell: {0}  Edition: {1}" -f $PSVersionTable.PSVersion, $PSVersionTable.PSEdition)
     Write-Host ("Flags: WhatIf={0} DisableInteractivity={1} VerboseWinget={2}" -f $WhatIf, $DisableInteractivity, $VerboseWinget)
@@ -125,9 +136,9 @@ function Invoke-StepScript {
 # MAIN
 # -------------------------
 $RepoRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
-$StepsDir = Join-Path $RepoRoot $StepsDirName
+$ScriptsDir = Join-Path $RepoRoot $ScriptsDirName
 
-Ensure-Folder $LogRoot
+New-FolderIfMissing $LogRoot
 $runId   = (Get-Date).ToString("yyyyMMdd-HHmmss")
 $logFile = Join-Path $LogRoot "setup-$runId.log"
 
@@ -136,18 +147,18 @@ Start-Transcript -Path $logFile -Append | Out-Null
 Assert-Admin
 
 try {
-    Write-Header -RepoRoot $RepoRoot -StepsDir $StepsDir -LogFile $logFile
+    Write-Header -RepoRoot $RepoRoot -StepsDir $ScriptsDir -LogFile $logFile
 
-    if (-not (Test-Path -LiteralPath $StepsDir)) {
-        throw "Steps folder not found: $StepsDir"
+    if (-not (Test-Path -LiteralPath $ScriptsDir)) {
+        throw "Steps folder not found: $ScriptsDir"
     }
 
-    if (-not $Steps -or $Steps.Count -eq 0) {
-        throw "No steps defined in `$Steps. Add filenames to the list at the top."
+    if (-not $Scripts -or $Scripts.Count -eq 0) {
+        throw "No steps defined in `$Scripts. Add filenames to the list at the top."
     }
 
-    foreach ($step in $Steps) {
-        $path = Join-Path $StepsDir $step
+    foreach ($step in $Scripts) {
+        $path = Join-Path $ScriptsDir $step
 
         Invoke-StepScript `
             -Path $path `

@@ -19,7 +19,7 @@ Invoke-WebRequest -Uri 'https://github.com/mdelgert/win11/releases/latest/downlo
 ```
 
 ## Links
-
+- [Proxmox README](proxmox/README.md)
 - [unattend.iso](https://github.com/mdelgert/win11/releases/latest/download/unattend.iso) - Latest release
 - [Repository](https://github.com/mdelgert/Win11)
 - [Unattend Generator](https://schneegans.de/windows/unattend-generator/)

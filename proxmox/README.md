@@ -231,6 +231,20 @@ To refresh the installed files from GitHub, just run the installer again:
 bash <(curl -fsSL https://raw.githubusercontent.com/mdelgert/win11/main/proxmox/install-update-unattend-iso.sh)
 ```
 
+## Uninstall
+
+To remove the updater service and timer but keep the ISO and logs:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mdelgert/win11/main/proxmox/uninstall-update-unattend-iso.sh)
+```
+
+To remove everything including the ISO, version marker, and logs:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mdelgert/win11/main/proxmox/uninstall-update-unattend-iso.sh) --remove-iso --remove-version --remove-logs
+```
+
 ## Troubleshooting
 
 ### Timer installed but nothing downloaded

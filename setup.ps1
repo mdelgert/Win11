@@ -4,7 +4,7 @@
 #
 # - Main entrypoint: setup.ps1 (repo root)
 # - Runs ordered step scripts from .\steps (explicit list, no auto-discovery)
-# - Logs to: C:\ProgramData\Win11Setup\Logs
+# - Logs to: C:\Setup\logs
 #
 # IMPORTANT:
 # This script must remain compatible with Windows PowerShell 5.1.
@@ -25,7 +25,7 @@ Set-StrictMode -Version Latest
 # USER CONFIG (edit here)
 # ==========================
 $StepsDirName = "steps"
-$LogRoot      = "C:\ProgramData\Win11Setup\Logs"
+$LogRoot      = "C:\Setup\logs"
 
 # Ordered list of steps to run (filenames only, executed in this exact order)
 $Steps = @(
@@ -38,9 +38,14 @@ $Steps = @(
 # ==========================
 
 function Assert-Admin {
-    $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
-    ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-    if (-not $isAdmin) { throw "Run in an elevated PowerShell (Run as Administrator)." }
+    if (-not (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
+    ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
+        try {
+            Add-Content -LiteralPath $logFile -Value ("[{0}] Script is not running elevated." -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"))
+        }
+        catch {}
+        throw "Run in an elevated PowerShell (Run as Administrator)."
+    }
 }
 
 function Ensure-Folder([string]$Path) {
@@ -116,8 +121,6 @@ function Invoke-StepScript {
 # -------------------------
 # MAIN
 # -------------------------
-Assert-Admin
-
 $RepoRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
 $StepsDir = Join-Path $RepoRoot $StepsDirName
 
@@ -126,6 +129,8 @@ $runId   = (Get-Date).ToString("yyyyMMdd-HHmmss")
 $logFile = Join-Path $LogRoot "setup-$runId.log"
 
 Start-Transcript -Path $logFile -Append | Out-Null
+
+Assert-Admin
 
 try {
     Write-Header -RepoRoot $RepoRoot -StepsDir $StepsDir -LogFile $logFile

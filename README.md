@@ -19,7 +19,7 @@ $url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract
 
 # VM Config
 name: vm-unattend
-mem: 32768/4096
+mem: 32768/16384/4096
 
 # Default users and passwords
 mdelgert:p@ssw0rd2026!

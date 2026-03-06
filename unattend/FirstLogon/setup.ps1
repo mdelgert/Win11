@@ -3,28 +3,8 @@ $ErrorActionPreference = 'Stop'
 
 $repoUrl     = 'https://github.com/mdelgert/win11.git'
 $repoRoot    = 'C:\source'
-$repoDir     = "$repoRoot\win11"
-$setupScript = "$repoDir\setup.ps1"
-
-function Wait-ForPath {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Path,
-
-        [int]$TimeoutSeconds = 300
-    )
-
-    $end = (Get-Date).AddSeconds($TimeoutSeconds)
-
-    while ((Get-Date) -lt $end) {
-        if (Test-Path $Path) {
-            return $true
-        }
-        Start-Sleep -Seconds 2
-    }
-
-    return $false
-}
+$repoDir     = 'C:\source\win11'
+$setupScript = 'C:\source\win11\setup.ps1'
 
 function Wait-ForCommand {
     param(
@@ -47,49 +27,57 @@ function Wait-ForCommand {
     return $null
 }
 
-function Invoke-NativeWithRetry {
+function Get-GitPath {
+    $candidates = @(
+        'C:\Program Files\Git\cmd\git.exe',
+        'C:\Program Files\Git\bin\git.exe',
+        'C:\Program Files (x86)\Git\cmd\git.exe',
+        'C:\Program Files (x86)\Git\bin\git.exe'
+    )
+
+    foreach ($path in $candidates) {
+        if (Test-Path $path) {
+            return $path
+        }
+    }
+
+    return $null
+}
+
+function Wait-ForGit {
+    param(
+        [int]$TimeoutSeconds = 300
+    )
+
+    $end = (Get-Date).AddSeconds($TimeoutSeconds)
+
+    while ((Get-Date) -lt $end) {
+        $git = Get-GitPath
+        if ($git) {
+            return $git
+        }
+        Start-Sleep -Seconds 2
+    }
+
+    return $null
+}
+
+function Invoke-Native {
     param(
         [Parameter(Mandatory = $true)]
         [string]$FilePath,
 
         [Parameter(Mandatory = $true)]
-        [string[]]$Arguments,
-
-        [int]$RetryCount = 3,
-
-        [int]$DelaySeconds = 5
+        [string[]]$Arguments
     )
 
-    for ($attempt = 1; $attempt -le $RetryCount; $attempt++) {
-        Write-Host "Running: $FilePath $($Arguments -join ' ')"
-        & $FilePath @Arguments
-        $exitCode = $LASTEXITCODE
-
-        if ($exitCode -eq 0) {
-            return
-        }
-
-        if ($attempt -lt $RetryCount) {
-            Write-Warning "Command failed with exit code ${exitCode}. Retrying in $DelaySeconds seconds..."
-            Start-Sleep -Seconds $DelaySeconds
-        }
-        else {
-            throw "Command failed with exit code ${exitCode}: $FilePath $($Arguments -join ' ')"
-        }
-    }
+    Write-Host "Running: $FilePath $($Arguments -join ' ')"
+    & $FilePath @Arguments
+    return $LASTEXITCODE
 }
 
 Write-Host 'Waiting for winget...'
-
 $winget = Wait-ForCommand -Name 'winget.exe' -TimeoutSeconds 300
-
-if (-not $winget) {
-    $windowsAppsWinget = Join-Path $env:LOCALAPPDATA 'Microsoft\WindowsApps\winget.exe'
-
-    if (Wait-ForPath -Path $windowsAppsWinget -TimeoutSeconds 60) {
-        $winget = $windowsAppsWinget
-    }
-}
 
 if (-not $winget) {
     throw 'winget.exe was not found.'
@@ -97,54 +85,57 @@ if (-not $winget) {
 
 Write-Host "winget found at: $winget"
 
-Write-Host 'Installing Git...'
-Invoke-NativeWithRetry -FilePath $winget -Arguments @(
-    'install',
-    '--exact',
-    '--id', 'Git.Git',
-    '--silent',
-    '--accept-package-agreements',
-    '--accept-source-agreements',
-    '--source', 'winget',
-    '--scope', 'machine'
-) -RetryCount 3 -DelaySeconds 10
+$git = Get-GitPath
 
-Write-Host 'Waiting for git...'
-
-$git = Wait-ForCommand -Name 'git.exe' -TimeoutSeconds 300
-
-if (-not $git) {
-    $gitCmd = 'C:\Program Files\Git\cmd\git.exe'
-    $gitBin = 'C:\Program Files\Git\bin\git.exe'
-
-    if (Test-Path $gitCmd) {
-        $git = $gitCmd
-    }
-    elseif (Test-Path $gitBin) {
-        $git = $gitBin
-    }
+if ($git) {
+    Write-Host "Git already installed at: $git"
 }
+else {
+    Write-Host 'Git not found. Installing Git...'
 
-if (-not $git) {
-    throw 'git.exe was not found after installation.'
+    $exitCode = Invoke-Native -FilePath $winget -Arguments @(
+        'install',
+        '--exact',
+        '--id', 'Git.Git',
+        '--silent',
+        '--accept-package-agreements',
+        '--accept-source-agreements',
+        '--source', 'winget',
+        '--scope', 'machine'
+    )
+
+    if (($exitCode -ne 0) -and ($exitCode -ne -1978335189)) {
+        throw "winget install Git.Git failed with exit code ${exitCode}"
+    }
+
+    Write-Host 'Waiting for git.exe file...'
+    $git = Wait-ForGit -TimeoutSeconds 300
+
+    if (-not $git) {
+        throw 'git.exe was not found after installation.'
+    }
+
+    Write-Host "git found at: $git"
 }
-
-Write-Host "git found at: $git"
 
 if (-not (Test-Path $repoRoot)) {
     New-Item -ItemType Directory -Path $repoRoot -Force | Out-Null
 }
 
-if (Test-Path $repoDir) {
-    Write-Host "Repository already exists at $repoDir"
-}
-else {
+if (-not (Test-Path $repoDir)) {
     Write-Host "Cloning $repoUrl to $repoDir ..."
-    Invoke-NativeWithRetry -FilePath $git -Arguments @(
+    $cloneExitCode = Invoke-Native -FilePath $git -Arguments @(
         'clone',
         $repoUrl,
         $repoDir
-    ) -RetryCount 3 -DelaySeconds 10
+    )
+
+    if ($cloneExitCode -ne 0) {
+        throw "git clone failed with exit code ${cloneExitCode}"
+    }
+}
+else {
+    Write-Host "Repository already exists at $repoDir"
 }
 
 if (-not (Test-Path $setupScript)) {
@@ -156,7 +147,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File $setupScript
 
 $setupExitCode = $LASTEXITCODE
 if ($setupExitCode -ne 0) {
-    throw "setup.ps1 failed with exit code $setupExitCode"
+    throw "setup.ps1 failed with exit code ${setupExitCode}"
 }
 
 Write-Host 'Bootstrap completed successfully.'

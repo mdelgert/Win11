@@ -4,6 +4,20 @@ Windows 11 automation scripts for unattended installation and configuration.
 
 ## Quick Start
 
+### Proxmox auto download service
+
+To auto refresh the installed files from GitHub to proxmox, just run the installer:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mdelgert/win11/main/proxmox/install-update-unattend-iso.sh)
+```
+
+To remove everything including the ISO, version marker, and logs:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mdelgert/win11/main/proxmox/uninstall-update-unattend-iso.sh) --remove-iso --remove-version --remove-logs
+```
+
 ### Download the latest release
 
 **Linux/macOS (curl):**

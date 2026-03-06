@@ -92,9 +92,9 @@ try {
     }
 
     # Remove the zip file after extraction
-    if (Test-Path -Path $zipFile) {
-        Remove-Item -Path $zipFile -Force -ErrorAction SilentlyContinue
-    }
+    # if (Test-Path -Path $zipFile) {
+    #     Remove-Item -Path $zipFile -Force -ErrorAction SilentlyContinue
+    # }
 
     # Run setup script
     $setupScript = Join-Path -Path $repoFolder -ChildPath "setup.ps1"

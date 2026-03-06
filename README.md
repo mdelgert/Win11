@@ -4,10 +4,18 @@ Windows 11 automation scripts for unattended installation and configuration.
 
 ## Quick Start
 
-Check the latest release:
+### Download the latest release
+
+**Linux/macOS (curl):**
 
 ```bash
-curl -I -L https://github.com/mdelgert/win11/releases/latest/download/unattend.iso
+curl -L -o unattend.iso https://github.com/mdelgert/win11/releases/latest/download/unattend.iso
+```
+
+**Windows (PowerShell):**
+
+```powershell
+Invoke-WebRequest -Uri 'https://github.com/mdelgert/win11/releases/latest/download/unattend.iso' -OutFile 'unattend.iso'
 ```
 
 ## Links

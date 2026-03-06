@@ -11,7 +11,7 @@ Write-Host ""
 $autoLogonDir = "C:\Setup\AutoLogon"
 $autoLogonExe = Join-Path -Path $autoLogonDir -ChildPath "AutoLogon64.exe"
 $username = "mdelgert"
-$password = "p@ssw0rd2026!"
+$password = "p@ssw0rd2026!1"
 $domain   = "."
 
 # Ensure AutoLogon executable exists

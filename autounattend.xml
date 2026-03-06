@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
-	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=en-US&Keyboard=00000409&GeoLocation=244&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&KeepSensitiveFiles=true&ComputerNameMode=Random&CompactOsMode=Default&TimeZoneMode=Implicit&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=Partition&RecoverySize=1000&DiskAssertionMode=Skip&WindowsEditionMode=Generic&WindowsEdition=pro&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=mdelgert&AccountDisplayName0=&AccountPassword0=p%40ssw0rd2026%21&AccountGroup0=Administrators&AccountName1=elgertmd&AccountDisplayName1=&AccountPassword1=p%40ssw0rd2026%21&AccountGroup1=Users&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableDefender=true&DisableWindowsUpdate=true&DisableUac=true&DisableSystemRestore=true&EnableRemoteDesktop=true&AllowPowerShellScripts=true&TurnOffSystemSounds=true&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableCoreIsolation=true&DeleteWindowsOld=true&EffectsMode=Performance&DesktopIconsMode=Custom&IconNetwork=true&IconRecycleBin=true&IconThisPC=true&StartFoldersMode=Custom&StartFolderDownloads=true&StartFolderFileExplorer=true&StartFolderNetwork=true&StartFolderSettings=true&WifiMode=Skip&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Custom&SystemColorTheme=Dark&AppsColorTheme=Dark&AccentColor=%23000000&WallpaperMode=Script&WallpaperScript=%24url+%3D+%27https%3A%2F%2F4kwallpapers.com%2Fimages%2Fwallpapers%2Fwindows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png%27%3B%0D%0A%26+%7B%0D%0A%09%24ProgressPreference+%3D+%27SilentlyContinue%27%3B%0D%0A%09%28+Invoke-WebRequest+-Uri+%24url+-UseBasicParsing+-TimeoutSec+30+%29.Content%3B%0D%0A%7D%3B&LockScreenMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveCamera=true&RemoveClipchamp=true&RemoveClock=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGameAssist=true&RemoveGetHelp=true&RemoveHandwriting=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMathInputPanel=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveNotepad=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemovePhotos=true&RemovePowerAutomate=true&RemoveQuickAssist=true&RemoveRecall=true&RemoveSkype=true&RemoveSnippingTool=true&RemoveSolitaire=true&RemoveSpeech=true&RemoveStepsRecorder=true&RemoveStickyNotes=true&RemoveTeams=true&RemoveGetStarted=true&RemoveToDo=true&RemoveVoiceRecorder=true&RemoveWallet=true&RemoveWeather=true&RemoveFaxAndScan=true&RemoveWindowsMediaPlayer=true&RemoveZuneMusic=true&RemoveXboxApps=true&RemoveYourPhone=true&FirstLogonScript0=%24timeout+%3D+%5Bdatetime%5D%3A%3ANow.AddMinutes%28+5+%29%3B%0D%0A%24exe+%3D+%22%24env%3ALOCALAPPDATA%5CMicrosoft%5CWindowsApps%5Cwinget.exe%22%3B%0D%0A%0D%0Awhile%28+%24true+%29+%7B%0D%0A++++if%28+%24exe+%7C+Test-Path+%29+%7B%0D%0A++++++++%26+%24exe+install+%2D%2Dexact+%2D%2Did+Git.Git+%2D%2Dsource+winget+%2D%2Dsilent+%2D%2Daccept-package-agreements+%2D%2Daccept-source-agreements+%2D%2Dsource+winget+%2D%2Dscope+machine%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++if%28+%5Bdatetime%5D%3A%3ANow+-gt+%24timeout+%29+%7B%0D%0A++++++++%22File+%27%24%7Bexe%7D%27+does+not+exist.%22+%7C+Write-Warning%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++%22Waiting+for+%27%24%7Bexe%7D%27+to+become+available...%22+%7C+Write-Host%3B%0D%0A++++Start-Sleep+-Seconds+1%3B%0D%0A%7D&FirstLogonScriptType0=Ps1&FirstLogonScript1=%24timeout+%3D+%5Bdatetime%5D%3A%3ANow.AddMinutes%28+5+%29%3B%0D%0A%24exe+%3D+%22C%3A%5CProgram+Files%5CGit%5Ccmd%5Cgit.exe%22%3B%0D%0A%24repoUrl+%3D+%22https%3A%2F%2Fgithub.com%2Fmdelgert%2Fwin11.git%22%0D%0A%24repoDir+%3D+%22C%3A%5Csource%5Cwin11%22%0D%0A%0D%0Awhile%28+%24true+%29+%7B%0D%0A++++if%28+%24exe+%7C+Test-Path+%29+%7B%0D%0A++++++++%26+%24exe+clone+%24repoUrl+%24repoDir%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++if%28+%5Bdatetime%5D%3A%3ANow+-gt+%24timeout+%29+%7B%0D%0A++++++++%22File+%27%24%7Bexe%7D%27+does+not+exist.%22+%7C+Write-Warning%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++%22Waiting+for+%27%24%7Bexe%7D%27+to+become+available...%22+%7C+Write-Host%3B%0D%0A++++Start-Sleep+-Seconds+1%3B%0D%0A%7D&FirstLogonScriptType1=Ps1&FirstLogonScript2=%24timeout+%3D+%5Bdatetime%5D%3A%3ANow.AddMinutes%28+5+%29%3B%0D%0A%24exe+%3D+%22C%3A%5Csource%5Cwin11%5Csetup.ps1%22%3B%0D%0A%0D%0Awhile%28+%24true+%29+%7B%0D%0A++++if%28+%24exe+%7C+Test-Path+%29+%7B%0D%0A++++++++%26+%24exe+configure+%2D%2Denable%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++if%28+%5Bdatetime%5D%3A%3ANow+-gt+%24timeout+%29+%7B%0D%0A++++++++%22File+%27%24%7Bexe%7D%27+does+not+exist.%22+%7C+Write-Warning%3B%0D%0A++++++++return%3B%0D%0A++++%7D%0D%0A++++%22Waiting+for+%27%24%7Bexe%7D%27+to+become+available...%22+%7C+Write-Host%3B%0D%0A++++Start-Sleep+-Seconds+1%3B%0D%0A%7D&FirstLogonScriptType2=Ps1&WdacMode=Skip&AppLockerMode=Skip-->
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=en-US&Keyboard=00000409&GeoLocation=244&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&KeepSensitiveFiles=true&ComputerNameMode=Random&CompactOsMode=Default&TimeZoneMode=Implicit&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=Partition&RecoverySize=1000&DiskAssertionMode=Skip&WindowsEditionMode=Generic&WindowsEdition=pro&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=admin&AccountDisplayName0=&AccountPassword0=p%40ssw0rd2026%210&AccountGroup0=Administrators&AccountName1=mdelgert&AccountDisplayName1=&AccountPassword1=p%40ssw0rd2026%211&AccountGroup1=Administrators&AccountName2=elgertmd&AccountDisplayName2=&AccountPassword2=p%40ssw0rd2026%212&AccountGroup2=Users&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableDefender=true&DisableWindowsUpdate=true&DisableUac=true&DisableSystemRestore=true&EnableRemoteDesktop=true&AllowPowerShellScripts=true&TurnOffSystemSounds=true&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableCoreIsolation=true&DeleteWindowsOld=true&EffectsMode=Performance&DesktopIconsMode=Custom&IconNetwork=true&IconRecycleBin=true&IconThisPC=true&StartFoldersMode=Custom&StartFolderDownloads=true&StartFolderFileExplorer=true&StartFolderNetwork=true&StartFolderSettings=true&WifiMode=Skip&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Custom&SystemColorTheme=Dark&AppsColorTheme=Dark&AccentColor=%23000000&WallpaperMode=Script&WallpaperScript=%24url+%3D+%27https%3A%2F%2F4kwallpapers.com%2Fimages%2Fwallpapers%2Fwindows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png%27%3B%0D%0A%26+%7B%0D%0A%09%24ProgressPreference+%3D+%27SilentlyContinue%27%3B%0D%0A%09%28+Invoke-WebRequest+-Uri+%24url+-UseBasicParsing+-TimeoutSec+30+%29.Content%3B%0D%0A%7D%3B&LockScreenMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveCamera=true&RemoveClipchamp=true&RemoveClock=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGameAssist=true&RemoveGetHelp=true&RemoveHandwriting=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMathInputPanel=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemovePhotos=true&RemovePowerAutomate=true&RemoveQuickAssist=true&RemoveRecall=true&RemoveSkype=true&RemoveSnippingTool=true&RemoveSolitaire=true&RemoveSpeech=true&RemoveStepsRecorder=true&RemoveStickyNotes=true&RemoveTeams=true&RemoveGetStarted=true&RemoveToDo=true&RemoveVoiceRecorder=true&RemoveWallet=true&RemoveWeather=true&RemoveFaxAndScan=true&RemoveWindowsMediaPlayer=true&RemoveZuneMusic=true&RemoveXboxApps=true&RemoveYourPhone=true&FirstLogonScript0=Write-Host+%22%22%0D%0AWrite-Host+%22%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%22%0D%0AWrite-Host+%22Running+step+00-autologon-download.ps1%22%0D%0AWrite-Host+%22Machine%3A+%24env%3ACOMPUTERNAME%22%0D%0AWrite-Host+%22User%3A+%24env%3AUSERNAME%22%0D%0AWrite-Host+%22Time%3A+%24%28Get-Date%29%22%0D%0AWrite-Host+%22%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%22%0D%0AWrite-Host+%22%22%0D%0A%0D%0A%23+Configuration%0D%0A%24autoLogonUrl+%3D+%22https%3A%2F%2Fdownload.sysinternals.com%2Ffiles%2FAutoLogon.zip%22%0D%0A%24downloadPath+%3D+%22C%3A%5CSetup%22%0D%0A%24zipFile+%3D+Join-Path+-Path+%24downloadPath+-ChildPath+%22AutoLogon.zip%22%0D%0A%24extractPath+%3D+Join-Path+-Path+%24downloadPath+-ChildPath+%22AutoLogon%22%0D%0A%0D%0A%23+Ensure+download+directory+exists%0D%0Aif+%28-not+%28Test-Path+-Path+%24downloadPath%29%29+%7B%0D%0A++++New-Item+-ItemType+Directory+-Path+%24downloadPath+-Force+%7C+Out-Null%0D%0A%7D%0D%0A%0D%0A%23+Enable+TLS+1.2%0D%0A%5BNet.ServicePointManager%5D%3A%3ASecurityProtocol+%3D+%5BNet.SecurityProtocolType%5D%3A%3ATls12%0D%0A%0D%0A%23+Download+AutoLogon%0D%0AWrite-Host+%22Downloading+AutoLogon+from+Sysinternals...%22%0D%0Atry+%7B%0D%0A++++Invoke-WebRequest+-Uri+%24autoLogonUrl+-OutFile+%24zipFile+-UseBasicParsing+-ErrorAction+Stop%0D%0A++++Write-Host+%22Download+complete%3A+%24zipFile%22%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Host+%22ERROR%3A+Failed+to+download+AutoLogon+-+%24%28%24_.Exception.Message%29%22%0D%0A++++exit+1%0D%0A%7D%0D%0A%0D%0A%23+Extract+AutoLogon%0D%0AWrite-Host+%22Extracting+AutoLogon...%22%0D%0Atry+%7B%0D%0A++++if+%28Test-Path+-Path+%24extractPath%29+%7B%0D%0A++++++++Remove-Item+-Path+%24extractPath+-Recurse+-Force%0D%0A++++%7D%0D%0A++++Expand-Archive+-Path+%24zipFile+-DestinationPath+%24extractPath+-Force+-ErrorAction+Stop%0D%0A++++Write-Host+%22Extracted+to%3A+%24extractPath%22%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Host+%22ERROR%3A+Failed+to+extract+AutoLogon+-+%24%28%24_.Exception.Message%29%22%0D%0A++++exit+1%0D%0A%7D%0D%0A%0D%0AWrite-Host+%22AutoLogon+setup+complete%22%0D%0A&FirstLogonScriptType0=Ps1&FirstLogonScript1=Write-Host+%22%22%0D%0AWrite-Host+%22%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%22%0D%0AWrite-Host+%22Running+step+01-autologon-enable.ps1%22%0D%0AWrite-Host+%22Machine%3A+%24env%3ACOMPUTERNAME%22%0D%0AWrite-Host+%22User%3A+%24env%3AUSERNAME%22%0D%0AWrite-Host+%22Time%3A+%24%28Get-Date%29%22%0D%0AWrite-Host+%22%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%22%0D%0AWrite-Host+%22%22%0D%0A%0D%0A%23+Configuration%0D%0A%24autoLogonDir+%3D+%22C%3A%5CSetup%5CAutoLogon%22%0D%0A%24autoLogonExe+%3D+Join-Path+-Path+%24autoLogonDir+-ChildPath+%22AutoLogon64.exe%22%0D%0A%24username+%3D+%22mdelgert%22%0D%0A%24password+%3D+%22p%40ssw0rd2026%211%22%0D%0A%24domain+++%3D+%22.%22%0D%0A%0D%0A%23+Ensure+AutoLogon+executable+exists%0D%0Aif+%28-not+%28Test-Path+-Path+%24autoLogonExe%29%29+%7B%0D%0A++++Write-Host+%22ERROR%3A+AutoLogon+executable+not+found+at+%24autoLogonExe%22%0D%0A++++exit+1%0D%0A%7D%0D%0A%0D%0AWrite-Host+%22Enabling+autologon+for+user+%24username...%22%0D%0Atry+%7B%0D%0A++++Start-Process+-FilePath+%24autoLogonExe+%60%0D%0A++++++++-ArgumentList+%22%2Faccepteula+%24username+%24domain+%24password%22+%60%0D%0A++++++++-Wait+-NoNewWindow%0D%0A++++Write-Host+%22Autologon+enabled+successfully.%22%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Host+%22ERROR%3A+Failed+to+enable+autologon+-+%24%28%24_.Exception.Message%29%22%0D%0A++++exit+1%0D%0A%7D%0D%0A%0D%0AWrite-Host+%22AutoLogon+enable+complete%22%0D%0A&FirstLogonScriptType1=Ps1&UserOnceScript0=%23+Bootstrap.ps1+-+Download+and+run+source+from+the+repository%0D%0A%23Requires+-Version+5.1%0D%0A%24ErrorActionPreference+%3D+%22Stop%22%0D%0A%0D%0A%23+Configuration%0D%0A%24repoZip+%3D+%22https%3A%2F%2Fgithub.com%2Fmdelgert%2Fwin11%2Farchive%2Frefs%2Fheads%2Fmain.zip%22%0D%0A%24dest+%3D+%22C%3A%5CSetup%22%0D%0A%24zipFile+%3D+Join-Path+-Path+%24dest+-ChildPath+%22repo.zip%22%0D%0A%24log+%3D+Join-Path+-Path+%24dest+-ChildPath+%22logs%5Cbootstrap.log%22%0D%0A%0D%0A%23+Remove+existing+dest+folder+if+it+exists+to+ensure+a+clean+state%0D%0Aif+%28Test-Path+-Path+%24dest%29+%7B%0D%0A++++Remove-Item+-Path+%24dest+-Recurse+-Force%0D%0A%7D%0D%0A%0D%0A%23+Ensure+logs+directory+exists%0D%0A%24logDir+%3D+Split-Path+-Path+%24log+-Parent%0D%0Aif+%28-not+%28Test-Path+-Path+%24logDir%29%29+%7B%0D%0A++++New-Item+-ItemType+Directory+-Path+%24logDir+-Force+%7C+Out-Null%0D%0A%7D%0D%0A%0D%0Afunction+Write-Log+%7B%0D%0A++++param%28%0D%0A++++++++%5BParameter%28Mandatory+%3D+%24true%29%5D%0D%0A++++++++%5Bstring%5D%24Message%0D%0A++++%29%0D%0A++++%24timestamp+%3D+Get-Date+-Format+%22yyyy-MM-dd+HH%3Amm%3Ass%22%0D%0A++++%24logEntry+%3D+%22%24timestamp+%24Message%22%0D%0A++++Write-Host+%24logEntry%0D%0A++++Add-Content+-Path+%24log+-Value+%24logEntry+-ErrorAction+SilentlyContinue%0D%0A%7D%0D%0A%0D%0Afunction+Test-NetworkReady+%7B%0D%0A++++param%28%0D%0A++++++++%5Bstring%5D%24HostName+%3D+%22github.com%22%2C%0D%0A++++++++%5Bint%5D%24Port+%3D+443%2C%0D%0A++++++++%5Bint%5D%24TimeoutSeconds+%3D+300%2C%0D%0A++++++++%5Bint%5D%24RetryIntervalSeconds+%3D+5%0D%0A++++%29%0D%0A++++%24stopwatch+%3D+%5BSystem.Diagnostics.Stopwatch%5D%3A%3AStartNew%28%29%0D%0A++++while+%28%24stopwatch.Elapsed.TotalSeconds+-lt+%24TimeoutSeconds%29+%7B%0D%0A++++++++try+%7B%0D%0A++++++++++++%24tcpClient+%3D+New-Object+System.Net.Sockets.TcpClient%0D%0A++++++++++++%24asyncResult+%3D+%24tcpClient.BeginConnect%28%24HostName%2C+%24Port%2C+%24null%2C+%24null%29%0D%0A++++++++++++%24wait+%3D+%24asyncResult.AsyncWaitHandle.WaitOne%283000%2C+%24false%29%0D%0A++++++++++++if+%28%24wait+-and+%24tcpClient.Connected%29+%7B%0D%0A++++++++++++++++%24tcpClient.Close%28%29%0D%0A++++++++++++++++return+%24true%0D%0A++++++++++++%7D%0D%0A++++++++++++%24tcpClient.Close%28%29%0D%0A++++++++%7D%0D%0A++++++++catch+%7B%0D%0A++++++++++++%23+Connection+failed%2C+will+retry%0D%0A++++++++%7D%0D%0A++++++++Start-Sleep+-Seconds+%24RetryIntervalSeconds%0D%0A++++%7D%0D%0A++++return+%24false%0D%0A%7D%0D%0A%0D%0A%23+Main+execution%0D%0Atry+%7B%0D%0A++++Write-Log+%22Bootstrap+starting%22%0D%0A%0D%0A++++%23+Wait+for+network+connectivity%0D%0A++++Write-Log+%22Waiting+for+network+connectivity...%22%0D%0A++++if+%28-not+%28Test-NetworkReady%29%29+%7B%0D%0A++++++++throw+%22Network+connectivity+timeout+-+unable+to+reach+github.com%22%0D%0A++++%7D%0D%0A++++Write-Log+%22Network+ready%22%0D%0A%0D%0A++++%23+Enable+TLS+1.2+for+secure+downloads%0D%0A++++%5BNet.ServicePointManager%5D%3A%3ASecurityProtocol+%3D+%5BNet.SecurityProtocolType%5D%3A%3ATls12%0D%0A%0D%0A++++%23+Download+repository%0D%0A++++Write-Log+%22Downloading+repository+zip%22%0D%0A++++Invoke-WebRequest+-Uri+%24repoZip+-OutFile+%24zipFile+-UseBasicParsing+-ErrorAction+Stop%0D%0A%0D%0A++++%23+Extract+repository%0D%0A++++Write-Log+%22Extracting+repository%22%0D%0A++++Expand-Archive+-Path+%24zipFile+-DestinationPath+%24dest+-Force+-ErrorAction+Stop%0D%0A%0D%0A++++%23+Rename+extracted+folder+from+win11-main+to+win11%0D%0A++++%24extractedFolder+%3D+Join-Path+-Path+%24dest+-ChildPath+%22win11-main%22%0D%0A++++%24repoFolder+%3D+Join-Path+-Path+%24dest+-ChildPath+%22win11%22%0D%0A++++%0D%0A++++if+%28Test-Path+-Path+%24extractedFolder%29+%7B%0D%0A++++++++if+%28Test-Path+-Path+%24repoFolder%29+%7B%0D%0A++++++++++++Remove-Item+-Path+%24repoFolder+-Recurse+-Force%0D%0A++++++++%7D%0D%0A++++++++Rename-Item+-Path+%24extractedFolder+-NewName+%22win11%22+-Force%0D%0A++++++++Write-Log+%22Renamed+folder+to+win11%22%0D%0A++++%7D%0D%0A%0D%0A++++%23+Remove+the+zip+file+after+extraction%0D%0A++++if+%28Test-Path+-Path+%24zipFile%29+%7B%0D%0A++++++++Remove-Item+-Path+%24zipFile+-Force+-ErrorAction+SilentlyContinue%0D%0A++++%7D%0D%0A%0D%0A++++%23+Run+setup+script%0D%0A++++%24setupScript+%3D+Join-Path+-Path+%24repoFolder+-ChildPath+%22setup.ps1%22%0D%0A%0D%0A++++if+%28Test-Path+-Path+%24setupScript%29+%7B%0D%0A++++++++Write-Log+%22Running+setup.ps1%22%0D%0A++++++++%26+powershell.exe+-ExecutionPolicy+Bypass+-File+%24setupScript%0D%0A++++++++%24exitCode+%3D+%24LASTEXITCODE%0D%0A++++++++if+%28%24exitCode+-ne+0%29+%7B%0D%0A++++++++++++Write-Log+%22setup.ps1+exited+with+code%3A+%24exitCode%22%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A++++else+%7B%0D%0A++++++++throw+%22Setup+script+not+found%3A+%24setupScript%22%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22Bootstrap+finished+successfully%22%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Log+%22ERROR%3A+%24%28%24_.Exception.Message%29%22%0D%0A++++exit+1%0D%0A%7D&UserOnceScriptType0=Ps1&WdacMode=Skip&AppLockerMode=Skip-->
 	<settings pass="offlineServicing"></settings>
 	<settings pass="windowsPE">
 		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -143,11 +143,20 @@
 			<UserAccounts>
 				<LocalAccounts>
 					<LocalAccount wcm:action="add">
+						<Name>admin</Name>
+						<DisplayName></DisplayName>
+						<Group>Administrators</Group>
+						<Password>
+							<Value>p@ssw0rd2026!0</Value>
+							<PlainText>true</PlainText>
+						</Password>
+					</LocalAccount>
+					<LocalAccount wcm:action="add">
 						<Name>mdelgert</Name>
 						<DisplayName></DisplayName>
 						<Group>Administrators</Group>
 						<Password>
-							<Value>p@ssw0rd2026!</Value>
+							<Value>p@ssw0rd2026!1</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
@@ -156,18 +165,18 @@
 						<DisplayName></DisplayName>
 						<Group>Users</Group>
 						<Password>
-							<Value>p@ssw0rd2026!</Value>
+							<Value>p@ssw0rd2026!2</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
 				</LocalAccounts>
 			</UserAccounts>
 			<AutoLogon>
-				<Username>mdelgert</Username>
+				<Username>admin</Username>
 				<Enabled>true</Enabled>
 				<LogonCount>1</LogonCount>
 				<Password>
-					<Value>p@ssw0rd2026!</Value>
+					<Value>p@ssw0rd2026!0</Value>
 					<PlainText>true</PlainText>
 				</Password>
 			</AutoLogon>
@@ -222,7 +231,6 @@ $selectors = @(
 	'Microsoft.WindowsMaps';
 	'Microsoft.MixedReality.Portal';
 	'Microsoft.BingNews';
-	'Microsoft.WindowsNotepad';
 	'Microsoft.MicrosoftOfficeHub';
 	'Microsoft.Office.OneNote';
 	'Microsoft.OutlookForWindows';
@@ -615,56 +623,212 @@ function Set-WallpaperImage {
 Set-WallpaperImage -LiteralPath 'C:\Windows\Setup\Scripts\Wallpaper';
 		</File>
 		<File path="C:\Windows\Setup\Scripts\unattend-01.ps1">
-$timeout = [datetime]::Now.AddMinutes( 5 );
-$exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe";
+Write-Host ""
+Write-Host "==============================="
+Write-Host "Running step 00-autologon-download.ps1"
+Write-Host "Machine: $env:COMPUTERNAME"
+Write-Host "User: $env:USERNAME"
+Write-Host "Time: $(Get-Date)"
+Write-Host "==============================="
+Write-Host ""
 
-while( $true ) {
-    if( $exe | Test-Path ) {
-        &amp; $exe install --exact --id Git.Git --source winget --silent --accept-package-agreements --accept-source-agreements --source winget --scope machine;
-        return;
-    }
-    if( [datetime]::Now -gt $timeout ) {
-        "File '${exe}' does not exist." | Write-Warning;
-        return;
-    }
-    "Waiting for '${exe}' to become available..." | Write-Host;
-    Start-Sleep -Seconds 1;
+# Configuration
+$autoLogonUrl = "https://download.sysinternals.com/files/AutoLogon.zip"
+$downloadPath = "C:\Setup"
+$zipFile = Join-Path -Path $downloadPath -ChildPath "AutoLogon.zip"
+$extractPath = Join-Path -Path $downloadPath -ChildPath "AutoLogon"
+
+# Ensure download directory exists
+if (-not (Test-Path -Path $downloadPath)) {
+    New-Item -ItemType Directory -Path $downloadPath -Force | Out-Null
 }
+
+# Enable TLS 1.2
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+# Download AutoLogon
+Write-Host "Downloading AutoLogon from Sysinternals..."
+try {
+    Invoke-WebRequest -Uri $autoLogonUrl -OutFile $zipFile -UseBasicParsing -ErrorAction Stop
+    Write-Host "Download complete: $zipFile"
+}
+catch {
+    Write-Host "ERROR: Failed to download AutoLogon - $($_.Exception.Message)"
+    exit 1
+}
+
+# Extract AutoLogon
+Write-Host "Extracting AutoLogon..."
+try {
+    if (Test-Path -Path $extractPath) {
+        Remove-Item -Path $extractPath -Recurse -Force
+    }
+    Expand-Archive -Path $zipFile -DestinationPath $extractPath -Force -ErrorAction Stop
+    Write-Host "Extracted to: $extractPath"
+}
+catch {
+    Write-Host "ERROR: Failed to extract AutoLogon - $($_.Exception.Message)"
+    exit 1
+}
+
+Write-Host "AutoLogon setup complete"
 		</File>
 		<File path="C:\Windows\Setup\Scripts\unattend-02.ps1">
-$timeout = [datetime]::Now.AddMinutes( 5 );
-$exe = "C:\Program Files\Git\cmd\git.exe";
-$repoUrl = "https://github.com/mdelgert/win11.git"
-$repoDir = "C:\source\win11"
+Write-Host ""
+Write-Host "==============================="
+Write-Host "Running step 01-autologon-enable.ps1"
+Write-Host "Machine: $env:COMPUTERNAME"
+Write-Host "User: $env:USERNAME"
+Write-Host "Time: $(Get-Date)"
+Write-Host "==============================="
+Write-Host ""
 
-while( $true ) {
-    if( $exe | Test-Path ) {
-        &amp; $exe clone $repoUrl $repoDir;
-        return;
-    }
-    if( [datetime]::Now -gt $timeout ) {
-        "File '${exe}' does not exist." | Write-Warning;
-        return;
-    }
-    "Waiting for '${exe}' to become available..." | Write-Host;
-    Start-Sleep -Seconds 1;
+# Configuration
+$autoLogonDir = "C:\Setup\AutoLogon"
+$autoLogonExe = Join-Path -Path $autoLogonDir -ChildPath "AutoLogon64.exe"
+$username = "mdelgert"
+$password = "p@ssw0rd2026!1"
+$domain   = "."
+
+# Ensure AutoLogon executable exists
+if (-not (Test-Path -Path $autoLogonExe)) {
+    Write-Host "ERROR: AutoLogon executable not found at $autoLogonExe"
+    exit 1
 }
+
+Write-Host "Enabling autologon for user $username..."
+try {
+    Start-Process -FilePath $autoLogonExe `
+        -ArgumentList "/accepteula $username $domain $password" `
+        -Wait -NoNewWindow
+    Write-Host "Autologon enabled successfully."
+}
+catch {
+    Write-Host "ERROR: Failed to enable autologon - $($_.Exception.Message)"
+    exit 1
+}
+
+Write-Host "AutoLogon enable complete"
 		</File>
 		<File path="C:\Windows\Setup\Scripts\unattend-03.ps1">
-$timeout = [datetime]::Now.AddMinutes( 5 );
-$exe = "C:\source\win11\setup.ps1";
+# Bootstrap.ps1 - Download and run source from the repository
+#Requires -Version 5.1
+$ErrorActionPreference = "Stop"
 
-while( $true ) {
-    if( $exe | Test-Path ) {
-        &amp; $exe configure --enable;
-        return;
+# Configuration
+$repoZip = "https://github.com/mdelgert/win11/archive/refs/heads/main.zip"
+$dest = "C:\Setup"
+$zipFile = Join-Path -Path $dest -ChildPath "repo.zip"
+$log = Join-Path -Path $dest -ChildPath "logs\bootstrap.log"
+
+# Remove existing dest folder if it exists to ensure a clean state
+if (Test-Path -Path $dest) {
+    Remove-Item -Path $dest -Recurse -Force
+}
+
+# Ensure logs directory exists
+$logDir = Split-Path -Path $log -Parent
+if (-not (Test-Path -Path $logDir)) {
+    New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+}
+
+function Write-Log {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp $Message"
+    Write-Host $logEntry
+    Add-Content -Path $log -Value $logEntry -ErrorAction SilentlyContinue
+}
+
+function Test-NetworkReady {
+    param(
+        [string]$HostName = "github.com",
+        [int]$Port = 443,
+        [int]$TimeoutSeconds = 300,
+        [int]$RetryIntervalSeconds = 5
+    )
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    while ($stopwatch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
+        try {
+            $tcpClient = New-Object System.Net.Sockets.TcpClient
+            $asyncResult = $tcpClient.BeginConnect($HostName, $Port, $null, $null)
+            $wait = $asyncResult.AsyncWaitHandle.WaitOne(3000, $false)
+            if ($wait -and $tcpClient.Connected) {
+                $tcpClient.Close()
+                return $true
+            }
+            $tcpClient.Close()
+        }
+        catch {
+            # Connection failed, will retry
+        }
+        Start-Sleep -Seconds $RetryIntervalSeconds
     }
-    if( [datetime]::Now -gt $timeout ) {
-        "File '${exe}' does not exist." | Write-Warning;
-        return;
+    return $false
+}
+
+# Main execution
+try {
+    Write-Log "Bootstrap starting"
+
+    # Wait for network connectivity
+    Write-Log "Waiting for network connectivity..."
+    if (-not (Test-NetworkReady)) {
+        throw "Network connectivity timeout - unable to reach github.com"
     }
-    "Waiting for '${exe}' to become available..." | Write-Host;
-    Start-Sleep -Seconds 1;
+    Write-Log "Network ready"
+
+    # Enable TLS 1.2 for secure downloads
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    # Download repository
+    Write-Log "Downloading repository zip"
+    Invoke-WebRequest -Uri $repoZip -OutFile $zipFile -UseBasicParsing -ErrorAction Stop
+
+    # Extract repository
+    Write-Log "Extracting repository"
+    Expand-Archive -Path $zipFile -DestinationPath $dest -Force -ErrorAction Stop
+
+    # Rename extracted folder from win11-main to win11
+    $extractedFolder = Join-Path -Path $dest -ChildPath "win11-main"
+    $repoFolder = Join-Path -Path $dest -ChildPath "win11"
+    
+    if (Test-Path -Path $extractedFolder) {
+        if (Test-Path -Path $repoFolder) {
+            Remove-Item -Path $repoFolder -Recurse -Force
+        }
+        Rename-Item -Path $extractedFolder -NewName "win11" -Force
+        Write-Log "Renamed folder to win11"
+    }
+
+    # Remove the zip file after extraction
+    if (Test-Path -Path $zipFile) {
+        Remove-Item -Path $zipFile -Force -ErrorAction SilentlyContinue
+    }
+
+    # Run setup script
+    $setupScript = Join-Path -Path $repoFolder -ChildPath "setup.ps1"
+
+    if (Test-Path -Path $setupScript) {
+        Write-Log "Running setup.ps1"
+        &amp; powershell.exe -ExecutionPolicy Bypass -File $setupScript
+        $exitCode = $LASTEXITCODE
+        if ($exitCode -ne 0) {
+            Write-Log "setup.ps1 exited with code: $exitCode"
+        }
+    }
+    else {
+        throw "Setup script not found: $setupScript"
+    }
+
+    Write-Log "Bootstrap finished successfully"
+}
+catch {
+    Write-Log "ERROR: $($_.Exception.Message)"
+    exit 1
 }
 		</File>
 		<File path="C:\Windows\Setup\Scripts\Specialize.ps1">
@@ -674,12 +838,6 @@ $scripts = @(
 	};
 	{
 		Remove-Item -LiteralPath 'Registry::HKLM\Software\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate' -Force -ErrorAction 'SilentlyContinue';
-	};
-	{
-		reg.exe add "HKCR\.txt\ShellNew" /v ItemName /t REG_EXPAND_SZ /d "@C:\Windows\system32\notepad.exe,-470" /f;
-		reg.exe add "HKCR\.txt\ShellNew" /v NullFile /t REG_SZ /f;
-		reg.exe add "HKCR\txtfilelegacy" /v FriendlyTypeName /t REG_EXPAND_SZ /d "@C:\Windows\system32\notepad.exe,-469" /f;
-		reg.exe add "HKCR\txtfilelegacy" /ve /t REG_SZ /d "Text Document" /f;
 	};
 	{
 		Remove-Item -LiteralPath 'C:\Users\Default\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk', 'C:\Windows\System32\OneDriveSetup.exe', 'C:\Windows\SysWOW64\OneDriveSetup.exe' -ErrorAction 'Continue';
@@ -845,6 +1003,9 @@ $scripts = @(
 		&amp; 'C:\Windows\Setup\Scripts\SetWallpaper.ps1';
 	};
 	{
+		&amp; 'C:\Windows\Setup\Scripts\unattend-03.ps1';
+	};
+	{
 		Get-Process -Name 'explorer' -ErrorAction 'SilentlyContinue' | Where-Object -FilterScript {
 			$_.SessionId -eq ( Get-Process -Id $PID ).SessionId;
 		} | Stop-Process -Force;
@@ -880,9 +1041,6 @@ $scripts = @(
 	};
 	{
 		reg.exe add "HKU\DefaultUser\Software\Microsoft\Internet Explorer\LowRegistry\Audio\PolicyConfig\PropertyStore" /f;
-	};
-	{
-		reg.exe add "HKU\DefaultUser\Software\Microsoft\Notepad" /v ShowStoreBanner /t REG_DWORD /d 0 /f;
 	};
 	{
 		Remove-ItemProperty -LiteralPath 'Registry::HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Run' -Name 'OneDriveSetup' -Force -ErrorAction 'Continue';
@@ -967,9 +1125,6 @@ $scripts = @(
 	};
 	{
 		&amp; 'C:\Windows\Setup\Scripts\unattend-02.ps1';
-	};
-	{
-		&amp; 'C:\Windows\Setup\Scripts\unattend-03.ps1';
 	};
 );
 

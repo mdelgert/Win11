@@ -30,13 +30,13 @@ $LogRoot      = "C:\Setup\logs"
 # Ordered list of steps to run (filenames only, executed in this exact order)
 $Steps = @(
 
-    "00-first-logon-autologon-download.ps1"
-    "01-first-logon-autologon-enable.ps1"
+    #"00-first-logon-autologon-download.ps1"
+    #"01-first-logon-autologon-enable.ps1"
     "02-winget-configure.ps1"
     "03-winget-configure.ps1"
     #"04-rdp.ps1"
-    "06-vscodemenu.ps1"
-    "05-ssh.ps1"
+    #"06-vscodemenu.ps1"
+    #"05-ssh.ps1"
     # "10-step1.ps1"
     # "20-step2.ps1"
     # "30-step3.ps1" 

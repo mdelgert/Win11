@@ -5,6 +5,13 @@
 # https://woshub.com/winget-dsc-configure/
 # https://learn.microsoft.com/en-us/windows/package-manager/configuration/create
 
+param(
+    [Parameter(Mandatory=$true)][string]$RepoRoot,
+    [switch]$WhatIf,
+    [switch]$DisableInteractivity,
+    [switch]$VerboseWinget
+)
+
 Write-Host ""
 Write-Host "==============================="
 Write-Host "Running 02-winget-configure.ps1"
@@ -13,13 +20,6 @@ Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
 Write-Host "==============================="
 Write-Host ""
-
-param(
-    [Parameter(Mandatory=$true)][string]$RepoRoot,
-    [switch]$WhatIf,
-    [switch]$DisableInteractivity,
-    [switch]$VerboseWinget
-)
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest

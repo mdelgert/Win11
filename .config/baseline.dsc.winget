@@ -9,6 +9,11 @@ properties:
         id: Microsoft.VisualStudioCode
         source: winget
 
+      id: Git
+      settings:
+        id: Git.Git
+        source: winget
+
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: VirtIO
       settings:

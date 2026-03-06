@@ -1,4 +1,4 @@
-# Bootstrap.ps1 - Download and run source from the repository
+# 01-user-once-source.ps1 - Download and run source from the repository
 #Requires -Version 5.1
 $ErrorActionPreference = "Stop"
 
@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 $repoZip = "https://github.com/mdelgert/win11/archive/refs/heads/main.zip"
 $dest = "C:\Setup"
 $zipFile = Join-Path -Path $dest -ChildPath "repo.zip"
-$log = Join-Path -Path $dest -ChildPath "logs\bootstrap.log"
+$log = Join-Path -Path $dest -ChildPath "logs\autounattend.log"
 
 # Remove existing dest folder if it exists to ensure a clean state
 if (Test-Path -Path $dest) {

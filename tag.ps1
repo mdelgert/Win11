@@ -8,6 +8,9 @@ This script finds the highest existing tag in the format:
 
 It increments PATCH by 1, creates the new annotated tag, and pushes it to origin.
 
+If no matching tags exist yet, it starts at:
+    v1.0.0
+
 The script also prints the exact git commands it runs so you can learn the workflow.
 
 GIT COMMANDS USED
@@ -19,24 +22,18 @@ GIT COMMANDS USED
    git tag --list
 
 3. Create a new annotated tag:
-   git tag -a v1.2.4 -m "Release v1.2.4"
+   git tag -a v1.0.0 -m "Release v1.0.0"
 
 4. Push the new tag to origin:
-   git push origin v1.2.4
+   git push origin v1.0.0
 
 EXAMPLES
 --------
 Run from the root of your git repo:
-    .\tag-next.ps1
+    .\tag.ps1
 
 Optional custom message:
-    .\tag-next.ps1 -Message "Build unattend.iso release"
-
-NOTES
------
-- Only tags matching vMAJOR.MINOR.PATCH are considered.
-- If no matching tags exist, the script starts at v1.0.0.
-- This script creates an annotated tag, which is preferred for releases.
+    .\tag.ps1 -Message "Build unattend.iso release"
 #>
 
 [CmdletBinding()]
@@ -68,8 +65,7 @@ function Test-CommandExists {
 
 function Get-NextVersionTag {
     param(
-        [Parameter(Mandatory = $true)]
-        [string[]]$Tags
+        [string[]]$Tags = @()
     )
 
     $validTags = foreach ($tag in $Tags) {
@@ -83,7 +79,7 @@ function Get-NextVersionTag {
         }
     }
 
-    if (-not $validTags) {
+    if (-not $validTags -or $validTags.Count -eq 0) {
         return 'v1.0.0'
     }
 

@@ -1,31 +1,49 @@
 # Win11
-Windows 11 Scripts
 
-# Curl location
+Windows 11 automation scripts for unattended installation and configuration.
+
+## Quick Start
+
+Check the latest release:
+
+```bash
 curl -I -L https://github.com/mdelgert/win11/releases/latest/download/unattend.iso
+```
 
-# Links
-[unattend.iso](https://github.com/mdelgert/win11/releases/latest/download/unattend.iso)
-[repo](https://github.com/mdelgert/Win11)
-[unattend-generator](https://schneegans.de/windows/unattend-generator/)
-[source](https://github.com/cschneegans/unattend-generator)
-[](https://schneegans.de/windows/unattend-generator/samples/)
-[UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall)
-[WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
-[Automate Software and Settings Deployment with WinGet Configure (DSC)](https://woshub.com/winget-dsc-configure/)
-[Any Burn](https://anyburn.com/download.php)
+## Links
 
-# Photo by Benjamin Voros on Unsplash. See https://unsplash.com/photos/snow-mountain-under-stars-phIFdC6lA4E for more info.
-$url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png';
+- [unattend.iso](https://github.com/mdelgert/win11/releases/latest/download/unattend.iso) - Latest release
+- [Repository](https://github.com/mdelgert/Win11)
+- [Unattend Generator](https://schneegans.de/windows/unattend-generator/)
+- [Unattend Generator Source](https://github.com/cschneegans/unattend-generator)
+- [Unattend Generator Samples](https://schneegans.de/windows/unattend-generator/samples/)
+- [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall)
+- [WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
+- [WinGet DSC Configure Guide](https://woshub.com/winget-dsc-configure/)
+- [Any Burn](https://anyburn.com/download.php)
+
+## Wallpaper
+
+Photo by Benjamin Voros on [Unsplash](https://unsplash.com/photos/snow-mountain-under-stars-phIFdC6lA4E).
+
+```powershell
+$url = 'https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png'
 & {
-	$ProgressPreference = 'SilentlyContinue';
-	( Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 30 ).Content;
-};
+    $ProgressPreference = 'SilentlyContinue'
+    (Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 30).Content
+}
+```
 
-# VM Config
-name: vm-unattend
-mem: 32768/16384/4096
+## VM Config
 
-# Default users and passwords
-mdelgert:p@ssw0rd2026!0
-elgertmd:p@ssw0rd2026!1
+| Setting | Value |
+|---------|-------|
+| Name    | `vm-unattend` |
+| Memory  | 32768 / 16384 / 4096 |
+
+## Default Users
+
+| Username   | Password          |
+|------------|-------------------|
+| mdelgert   | `p@ssw0rd2026!0`  |
+| elgertmd   | `p@ssw0rd2026!1`  |

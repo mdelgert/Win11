@@ -1,4 +1,4 @@
-# bootstrap.ps1 - Download and run the setup script from the repository
+# Bootstrap.ps1 - Download and run source from the repository
 #Requires -Version 5.1
 $ErrorActionPreference = "Stop"
 

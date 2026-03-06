@@ -22,5 +22,6 @@ name: vm-unattend
 mem: 32768/16384/4096
 
 # Default users and passwords
-mdelgert:p@ssw0rd2026!
-elgertmd:p@ssw0rd2026!
+admin:p@ssw0rd2026!0
+mdelgert:p@ssw0rd2026!1
+elgertmd:p@ssw0rd2026!2

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
-	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=en-US&Keyboard=00000409&GeoLocation=244&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&KeepSensitiveFiles=true&ComputerNameMode=Random&CompactOsMode=Default&TimeZoneMode=Implicit&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=Partition&RecoverySize=1000&DiskAssertionMode=Skip&WindowsEditionMode=Generic&WindowsEdition=pro&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=mdelgert&AccountDisplayName0=&AccountPassword0=p%40ssw0rd2026%210&AccountGroup0=Administrators&AccountName1=elgertmd&AccountDisplayName1=&AccountPassword1=p%40ssw0rd2026%211&AccountGroup1=Users&AutoLogonMode=Own&ObscurePasswords=true&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableDefender=true&DisableWindowsUpdate=true&DisableUac=true&DisableSystemRestore=true&EnableRemoteDesktop=true&AllowPowerShellScripts=true&TurnOffSystemSounds=true&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableCoreIsolation=true&DeleteWindowsOld=true&EffectsMode=Performance&DesktopIconsMode=Custom&IconNetwork=true&IconRecycleBin=true&IconThisPC=true&StartFoldersMode=Default&WifiMode=Skip&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Custom&SystemColorTheme=Dark&AppsColorTheme=Dark&AccentColor=%23000000&WallpaperMode=Script&WallpaperScript=%24url+%3D+%27https%3A%2F%2F4kwallpapers.com%2Fimages%2Fwallpapers%2Fwindows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png%27%3B%0D%0A%26+%7B%0D%0A%09%24ProgressPreference+%3D+%27SilentlyContinue%27%3B%0D%0A%09%28+Invoke-WebRequest+-Uri+%24url+-UseBasicParsing+-TimeoutSec+30+%29.Content%3B%0D%0A%7D%3B&LockScreenMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveCamera=true&RemoveClipchamp=true&RemoveClock=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGameAssist=true&RemoveGetHelp=true&RemoveHandwriting=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMathInputPanel=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemovePhotos=true&RemovePowerAutomate=true&RemoveQuickAssist=true&RemoveRecall=true&RemoveSkype=true&RemoveSnippingTool=true&RemoveSolitaire=true&RemoveSpeech=true&RemoveStepsRecorder=true&RemoveStickyNotes=true&RemoveTeams=true&RemoveGetStarted=true&RemoveToDo=true&RemoveVoiceRecorder=true&RemoveWallet=true&RemoveWeather=true&RemoveFaxAndScan=true&RemoveWindowsMediaPlayer=true&RemoveZuneMusic=true&RemoveXboxApps=true&RemoveYourPhone=true&UserOnceScript0=%23+Bootstrap.ps1+-+Download+and+run+source+from+the+repository%0D%0A%23Requires+-Version+5.1%0D%0A%24ErrorActionPreference+%3D+%22Stop%22%0D%0A%0D%0A%23+Configuration%0D%0A%24repoZip+%3D+%22https%3A%2F%2Fgithub.com%2Fmdelgert%2Fwin11%2Farchive%2Frefs%2Fheads%2Fmain.zip%22%0D%0A%24dest+%3D+%22C%3A%5CSetup%22%0D%0A%24zipFile+%3D+Join-Path+-Path+%24dest+-ChildPath+%22repo.zip%22%0D%0A%24log+%3D+Join-Path+-Path+%24dest+-ChildPath+%22logs%5Cbootstrap.log%22%0D%0A%0D%0A%23+Remove+existing+dest+folder+if+it+exists+to+ensure+a+clean+state%0D%0Aif+%28Test-Path+-Path+%24dest%29+%7B%0D%0A++++Remove-Item+-Path+%24dest+-Recurse+-Force%0D%0A%7D%0D%0A%0D%0A%23+Ensure+logs+directory+exists%0D%0A%24logDir+%3D+Split-Path+-Path+%24log+-Parent%0D%0Aif+%28-not+%28Test-Path+-Path+%24logDir%29%29+%7B%0D%0A++++New-Item+-ItemType+Directory+-Path+%24logDir+-Force+%7C+Out-Null%0D%0A%7D%0D%0A%0D%0Afunction+Write-Log+%7B%0D%0A++++param%28%0D%0A++++++++%5BParameter%28Mandatory+%3D+%24true%29%5D%0D%0A++++++++%5Bstring%5D%24Message%0D%0A++++%29%0D%0A++++%24timestamp+%3D+Get-Date+-Format+%22yyyy-MM-dd+HH%3Amm%3Ass%22%0D%0A++++%24logEntry+%3D+%22%24timestamp+%24Message%22%0D%0A++++Write-Host+%24logEntry%0D%0A++++Add-Content+-Path+%24log+-Value+%24logEntry+-ErrorAction+SilentlyContinue%0D%0A%7D%0D%0A%0D%0Afunction+Test-NetworkReady+%7B%0D%0A++++param%28%0D%0A++++++++%5Bstring%5D%24HostName+%3D+%22github.com%22%2C%0D%0A++++++++%5Bint%5D%24Port+%3D+443%2C%0D%0A++++++++%5Bint%5D%24TimeoutSeconds+%3D+300%2C%0D%0A++++++++%5Bint%5D%24RetryIntervalSeconds+%3D+5%0D%0A++++%29%0D%0A++++%24stopwatch+%3D+%5BSystem.Diagnostics.Stopwatch%5D%3A%3AStartNew%28%29%0D%0A++++while+%28%24stopwatch.Elapsed.TotalSeconds+-lt+%24TimeoutSeconds%29+%7B%0D%0A++++++++try+%7B%0D%0A++++++++++++%24tcpClient+%3D+New-Object+System.Net.Sockets.TcpClient%0D%0A++++++++++++%24asyncResult+%3D+%24tcpClient.BeginConnect%28%24HostName%2C+%24Port%2C+%24null%2C+%24null%29%0D%0A++++++++++++%24wait+%3D+%24asyncResult.AsyncWaitHandle.WaitOne%283000%2C+%24false%29%0D%0A++++++++++++if+%28%24wait+-and+%24tcpClient.Connected%29+%7B%0D%0A++++++++++++++++%24tcpClient.Close%28%29%0D%0A++++++++++++++++return+%24true%0D%0A++++++++++++%7D%0D%0A++++++++++++%24tcpClient.Close%28%29%0D%0A++++++++%7D%0D%0A++++++++catch+%7B%0D%0A++++++++++++%23+Connection+failed%2C+will+retry%0D%0A++++++++%7D%0D%0A++++++++Start-Sleep+-Seconds+%24RetryIntervalSeconds%0D%0A++++%7D%0D%0A++++return+%24false%0D%0A%7D%0D%0A%0D%0A%23+Main+execution%0D%0Atry+%7B%0D%0A++++Write-Log+%22Bootstrap+starting%22%0D%0A%0D%0A++++%23+Wait+for+network+connectivity%0D%0A++++Write-Log+%22Waiting+for+network+connectivity...%22%0D%0A++++if+%28-not+%28Test-NetworkReady%29%29+%7B%0D%0A++++++++throw+%22Network+connectivity+timeout+-+unable+to+reach+github.com%22%0D%0A++++%7D%0D%0A++++Write-Log+%22Network+ready%22%0D%0A%0D%0A++++%23+Enable+TLS+1.2+for+secure+downloads%0D%0A++++%5BNet.ServicePointManager%5D%3A%3ASecurityProtocol+%3D+%5BNet.SecurityProtocolType%5D%3A%3ATls12%0D%0A%0D%0A++++%23+Download+repository%0D%0A++++Write-Log+%22Downloading+repository+zip%22%0D%0A++++Invoke-WebRequest+-Uri+%24repoZip+-OutFile+%24zipFile+-UseBasicParsing+-ErrorAction+Stop%0D%0A%0D%0A++++%23+Extract+repository%0D%0A++++Write-Log+%22Extracting+repository%22%0D%0A++++Expand-Archive+-Path+%24zipFile+-DestinationPath+%24dest+-Force+-ErrorAction+Stop%0D%0A%0D%0A++++%23+Rename+extracted+folder+from+win11-main+to+win11%0D%0A++++%24extractedFolder+%3D+Join-Path+-Path+%24dest+-ChildPath+%22win11-main%22%0D%0A++++%24repoFolder+%3D+Join-Path+-Path+%24dest+-ChildPath+%22win11%22%0D%0A++++%0D%0A++++if+%28Test-Path+-Path+%24extractedFolder%29+%7B%0D%0A++++++++if+%28Test-Path+-Path+%24repoFolder%29+%7B%0D%0A++++++++++++Remove-Item+-Path+%24repoFolder+-Recurse+-Force%0D%0A++++++++%7D%0D%0A++++++++Rename-Item+-Path+%24extractedFolder+-NewName+%22win11%22+-Force%0D%0A++++++++Write-Log+%22Renamed+folder+to+win11%22%0D%0A++++%7D%0D%0A%0D%0A++++%23+Remove+the+zip+file+after+extraction%0D%0A++++%23+if+%28Test-Path+-Path+%24zipFile%29+%7B%0D%0A++++%23+++++Remove-Item+-Path+%24zipFile+-Force+-ErrorAction+SilentlyContinue%0D%0A++++%23+%7D%0D%0A%0D%0A++++%23+Run+setup+script%0D%0A++++%24setupScript+%3D+Join-Path+-Path+%24repoFolder+-ChildPath+%22setup.ps1%22%0D%0A%0D%0A++++if+%28Test-Path+-Path+%24setupScript%29+%7B%0D%0A++++++++Write-Log+%22Running+setup.ps1%22%0D%0A++++++++%26+powershell.exe+-ExecutionPolicy+Bypass+-File+%24setupScript%0D%0A++++++++%24exitCode+%3D+%24LASTEXITCODE%0D%0A++++++++if+%28%24exitCode+-ne+0%29+%7B%0D%0A++++++++++++Write-Log+%22setup.ps1+exited+with+code%3A+%24exitCode%22%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A++++else+%7B%0D%0A++++++++throw+%22Setup+script+not+found%3A+%24setupScript%22%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22Bootstrap+finished+successfully%22%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Log+%22ERROR%3A+%24%28%24_.Exception.Message%29%22%0D%0A++++exit+1%0D%0A%7D&UserOnceScriptType0=Ps1&WdacMode=Skip&AppLockerMode=Skip-->
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=en-US&Keyboard=00000409&GeoLocation=244&ProcessorArchitecture=amd64&BypassRequirementsCheck=true&KeepSensitiveFiles=true&ComputerNameMode=Random&CompactOsMode=Default&TimeZoneMode=Implicit&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=Partition&RecoverySize=1000&DiskAssertionMode=Skip&WindowsEditionMode=Generic&WindowsEdition=pro&InstallFromMode=Automatic&PEMode=Default&UserAccountMode=Unattended&AccountName0=mdelgert&AccountDisplayName0=&AccountPassword0=p%40ssw0rd2026%210&AccountGroup0=Administrators&AccountName1=elgertmd&AccountDisplayName1=&AccountPassword1=p%40ssw0rd2026%211&AccountGroup1=Users&AutoLogonMode=Own&ObscurePasswords=true&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableDefender=true&DisableWindowsUpdate=true&DisableUac=true&DisableSystemRestore=true&EnableRemoteDesktop=true&AllowPowerShellScripts=true&TurnOffSystemSounds=true&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableCoreIsolation=true&DeleteWindowsOld=true&EffectsMode=Performance&DesktopIconsMode=Custom&IconNetwork=true&IconRecycleBin=true&IconThisPC=true&StartFoldersMode=Default&WifiMode=Skip&ExpressSettings=DisableAll&LockKeysMode=Skip&StickyKeysMode=Default&ColorMode=Custom&SystemColorTheme=Dark&AppsColorTheme=Dark&AccentColor=%23000000&WallpaperMode=Script&WallpaperScript=%24url+%3D+%27https%3A%2F%2F4kwallpapers.com%2Fimages%2Fwallpapers%2Fwindows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png%27%3B%0D%0A%26+%7B%0D%0A%09%24ProgressPreference+%3D+%27SilentlyContinue%27%3B%0D%0A%09%28+Invoke-WebRequest+-Uri+%24url+-UseBasicParsing+-TimeoutSec+30+%29.Content%3B%0D%0A%7D%3B&LockScreenMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveCamera=true&RemoveClipchamp=true&RemoveClock=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGameAssist=true&RemoveGetHelp=true&RemoveHandwriting=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMathInputPanel=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemovePhotos=true&RemovePowerAutomate=true&RemoveQuickAssist=true&RemoveRecall=true&RemoveSkype=true&RemoveSnippingTool=true&RemoveSolitaire=true&RemoveSpeech=true&RemoveStepsRecorder=true&RemoveStickyNotes=true&RemoveTeams=true&RemoveGetStarted=true&RemoveToDo=true&RemoveVoiceRecorder=true&RemoveWallet=true&RemoveWeather=true&RemoveFaxAndScan=true&RemoveWindowsMediaPlayer=true&RemoveZuneMusic=true&RemoveXboxApps=true&RemoveYourPhone=true&UserOnceScript0=%23+unattend-01.ps1%0D%0A%23Requires+-Version+5.1%0D%0A%24ErrorActionPreference+%3D+%22Stop%22%0D%0A%0D%0A%23+Purpose%3A%0D%0A%23+++Copy+the+repo+bundled+inside+the+unattend+ISO+to+C%3A%5CSetup%5Cwin11%0D%0A%23+++and+run+setup.ps1+from+the+local+copied+folder.%0D%0A%23%0D%0A%23+Expected+ISO+layout%3A%0D%0A%23+++%3CISO+ROOT%3E%5Cautounattend.xml%0D%0A%23+++%3CISO+ROOT%3E%5Cversion.txt%0D%0A%23+++%3CISO+ROOT%3E%5Crepo%5Csetup.ps1%0D%0A%23%0D%0A%23+Example+destination+after+copy%3A%0D%0A%23+++C%3A%5CSetup%5Cwin11%5Csetup.ps1%0D%0A%23%0D%0A%23+Logs%3A%0D%0A%23+++C%3A%5CSetup%5Clogs%5Cautounattend.log%0D%0A%23+++C%3A%5CSetup%5Clogs%5Cautounattend-transcript.log%0D%0A%23%0D%0A%23+Notes%3A%0D%0A%23+++-+No+network+required%0D%0A%23+++-+No+Git+required%0D%0A%23+++-+Safe+for+repeated+runs%0D%0A%23+++-+Intended+to+be+called+from+autounattend.xml+as+a+first-logon+script%0D%0A%0D%0A%24destRoot+++++++%3D+%22C%3A%5CSetup%22%0D%0A%24repoFolder+++++%3D+Join-Path+%24destRoot+%22win11%22%0D%0A%24logDir+++++++++%3D+Join-Path+%24destRoot+%22logs%22%0D%0A%24logFile++++++++%3D+Join-Path+%24logDir+%22autounattend.log%22%0D%0A%24transcriptFile+%3D+Join-Path+%24logDir+%22autounattend-transcript.log%22%0D%0A%0D%0Afunction+New-FolderIfMissing+%7B%0D%0A++++param%28%0D%0A++++++++%5BParameter%28Mandatory+%3D+%24true%29%5D%0D%0A++++++++%5Bstring%5D%24Path%0D%0A++++%29%0D%0A%0D%0A++++if+%28-not+%28Test-Path+-Path+%24Path%29%29+%7B%0D%0A++++++++New-Item+-ItemType+Directory+-Path+%24Path+-Force+%7C+Out-Null%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0Afunction+Write-Log+%7B%0D%0A++++param%28%0D%0A++++++++%5BParameter%28Mandatory+%3D+%24true%29%5D%0D%0A++++++++%5Bstring%5D%24Message%0D%0A++++%29%0D%0A%0D%0A++++New-FolderIfMissing+-Path+%24logDir%0D%0A%0D%0A++++%24timestamp+%3D+Get-Date+-Format+%22yyyy-MM-dd+HH%3Amm%3Ass%22%0D%0A++++%24entry+%3D+%22%24timestamp+%24Message%22%0D%0A%0D%0A++++Write-Host+%24entry%0D%0A++++Add-Content+-Path+%24logFile+-Value+%24entry+-ErrorAction+SilentlyContinue%0D%0A%7D%0D%0A%0D%0Afunction+Get-IsoRoot+%7B%0D%0A++++%24drives+%3D+Get-PSDrive+-PSProvider+FileSystem%0D%0A%0D%0A++++foreach+%28%24drive+in+%24drives%29+%7B%0D%0A++++++++%24marker+%3D+Join-Path+%24drive.Root+%22autounattend.xml%22%0D%0A++++++++if+%28Test-Path+-Path+%24marker%29+%7B%0D%0A++++++++++++return+%24drive.Root%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A%0D%0A++++return+%24null%0D%0A%7D%0D%0A%0D%0A%24transcriptStarted+%3D+%24false%0D%0A%0D%0Atry+%7B%0D%0A++++New-FolderIfMissing+-Path+%24destRoot%0D%0A++++New-FolderIfMissing+-Path+%24logDir%0D%0A%0D%0A++++Start-Transcript+-Path+%24transcriptFile+-Append+%7C+Out-Null%0D%0A++++%24transcriptStarted+%3D+%24true%0D%0A%0D%0A++++Write-Log+%22Bootstrap+starting%22%0D%0A%0D%0A++++%24isoRoot+%3D+Get-IsoRoot%0D%0A++++if+%28-not+%24isoRoot%29+%7B%0D%0A++++++++throw+%22Could+not+locate+ISO+drive+containing+autounattend.xml%22%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22ISO+root+found+at%3A+%24isoRoot%22%0D%0A%0D%0A++++%24sourceRepo+%3D+Join-Path+%24isoRoot+%22repo%22%0D%0A++++if+%28-not+%28Test-Path+-Path+%24sourceRepo%29%29+%7B%0D%0A++++++++throw+%22Repo+folder+not+found+on+ISO%3A+%24sourceRepo%22%0D%0A++++%7D%0D%0A%0D%0A++++%24setupScript+%3D+Join-Path+%24sourceRepo+%22setup.ps1%22%0D%0A++++if+%28-not+%28Test-Path+-Path+%24setupScript%29%29+%7B%0D%0A++++++++throw+%22setup.ps1+not+found+in+ISO+repo+folder%3A+%24setupScript%22%0D%0A++++%7D%0D%0A%0D%0A++++if+%28Test-Path+-Path+%24repoFolder%29+%7B%0D%0A++++++++Write-Log+%22Removing+existing+destination+folder%3A+%24repoFolder%22%0D%0A++++++++Remove-Item+-Path+%24repoFolder+-Recurse+-Force%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22Copying+repo+from+%24sourceRepo+to+%24repoFolder%22%0D%0A++++Copy-Item+-Path+%24sourceRepo+-Destination+%24repoFolder+-Recurse+-Force%0D%0A%0D%0A++++%24localSetupScript+%3D+Join-Path+%24repoFolder+%22setup.ps1%22%0D%0A++++if+%28-not+%28Test-Path+-Path+%24localSetupScript%29%29+%7B%0D%0A++++++++throw+%22setup.ps1+not+found+after+copy%3A+%24localSetupScript%22%0D%0A++++%7D%0D%0A%0D%0A++++%24versionFile+%3D+Join-Path+%24isoRoot+%22version.txt%22%0D%0A++++if+%28Test-Path+-Path+%24versionFile%29+%7B%0D%0A++++++++%24version+%3D+Get-Content+-Path+%24versionFile+-ErrorAction+SilentlyContinue+%7C+Select-Object+-First+1%0D%0A++++++++if+%28%24version%29+%7B%0D%0A++++++++++++Write-Log+%22ISO+version%3A+%24version%22%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22Running+setup.ps1%22%0D%0A++++%26+powershell.exe+-NoProfile+-ExecutionPolicy+Bypass+-File+%24localSetupScript%0D%0A%0D%0A++++%24exitCode+%3D+%24LASTEXITCODE%0D%0A++++if+%28%24exitCode+-ne+0%29+%7B%0D%0A++++++++throw+%22setup.ps1+exited+with+code+%24%7BexitCode%7D%22%0D%0A++++%7D%0D%0A%0D%0A++++Write-Log+%22Bootstrap+finished+successfully%22%0D%0A%0D%0A++++if+%28%24transcriptStarted%29+%7B%0D%0A++++++++Stop-Transcript+%7C+Out-Null%0D%0A++++++++%24transcriptStarted+%3D+%24false%0D%0A++++%7D%0D%0A%0D%0A++++exit+0%0D%0A%7D%0D%0Acatch+%7B%0D%0A++++Write-Log+%22ERROR%3A+%24%28%24_.Exception.Message%29%22%0D%0A%0D%0A++++if+%28%24transcriptStarted%29+%7B%0D%0A++++++++Stop-Transcript+%7C+Out-Null%0D%0A++++++++%24transcriptStarted+%3D+%24false%0D%0A++++%7D%0D%0A%0D%0A++++exit+1%0D%0A%7D&UserOnceScriptType0=Ps1&WdacMode=Skip&AppLockerMode=Skip-->
 	<settings pass="offlineServicing"></settings>
 	<settings pass="windowsPE">
 		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
@@ -614,25 +614,47 @@ function Set-WallpaperImage {
 Set-WallpaperImage -LiteralPath 'C:\Windows\Setup\Scripts\Wallpaper';
 		</File>
 		<File path="C:\Windows\Setup\Scripts\unattend-01.ps1">
-# Bootstrap.ps1 - Download and run source from the repository
+# unattend-01.ps1
 #Requires -Version 5.1
 $ErrorActionPreference = "Stop"
 
-# Configuration
-$repoZip = "https://github.com/mdelgert/win11/archive/refs/heads/main.zip"
-$dest = "C:\Setup"
-$zipFile = Join-Path -Path $dest -ChildPath "repo.zip"
-$log = Join-Path -Path $dest -ChildPath "logs\bootstrap.log"
+# Purpose:
+#   Copy the repo bundled inside the unattend ISO to C:\Setup\win11
+#   and run setup.ps1 from the local copied folder.
+#
+# Expected ISO layout:
+#   &lt;ISO ROOT&gt;\autounattend.xml
+#   &lt;ISO ROOT&gt;\version.txt
+#   &lt;ISO ROOT&gt;\repo\setup.ps1
+#
+# Example destination after copy:
+#   C:\Setup\win11\setup.ps1
+#
+# Logs:
+#   C:\Setup\logs\autounattend.log
+#   C:\Setup\logs\autounattend-transcript.log
+#
+# Notes:
+#   - No network required
+#   - No Git required
+#   - Safe for repeated runs
+#   - Intended to be called from autounattend.xml as a first-logon script
 
-# Remove existing dest folder if it exists to ensure a clean state
-if (Test-Path -Path $dest) {
-    Remove-Item -Path $dest -Recurse -Force
-}
+$destRoot       = "C:\Setup"
+$repoFolder     = Join-Path $destRoot "win11"
+$logDir         = Join-Path $destRoot "logs"
+$logFile        = Join-Path $logDir "autounattend.log"
+$transcriptFile = Join-Path $logDir "autounattend-transcript.log"
 
-# Ensure logs directory exists
-$logDir = Split-Path -Path $log -Parent
-if (-not (Test-Path -Path $logDir)) {
-    New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+function New-FolderIfMissing {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    if (-not (Test-Path -Path $Path)) {
+        New-Item -ItemType Directory -Path $Path -Force | Out-Null
+    }
 }
 
 function Write-Log {
@@ -640,97 +662,103 @@ function Write-Log {
         [Parameter(Mandatory = $true)]
         [string]$Message
     )
+
+    New-FolderIfMissing -Path $logDir
+
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $logEntry = "$timestamp $Message"
-    Write-Host $logEntry
-    Add-Content -Path $log -Value $logEntry -ErrorAction SilentlyContinue
+    $entry = "$timestamp $Message"
+
+    Write-Host $entry
+    Add-Content -Path $logFile -Value $entry -ErrorAction SilentlyContinue
 }
 
-function Test-NetworkReady {
-    param(
-        [string]$HostName = "github.com",
-        [int]$Port = 443,
-        [int]$TimeoutSeconds = 300,
-        [int]$RetryIntervalSeconds = 5
-    )
-    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    while ($stopwatch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
-        try {
-            $tcpClient = New-Object System.Net.Sockets.TcpClient
-            $asyncResult = $tcpClient.BeginConnect($HostName, $Port, $null, $null)
-            $wait = $asyncResult.AsyncWaitHandle.WaitOne(3000, $false)
-            if ($wait -and $tcpClient.Connected) {
-                $tcpClient.Close()
-                return $true
-            }
-            $tcpClient.Close()
+function Get-IsoRoot {
+    $drives = Get-PSDrive -PSProvider FileSystem
+
+    foreach ($drive in $drives) {
+        $marker = Join-Path $drive.Root "autounattend.xml"
+        if (Test-Path -Path $marker) {
+            return $drive.Root
         }
-        catch {
-            # Connection failed, will retry
-        }
-        Start-Sleep -Seconds $RetryIntervalSeconds
     }
-    return $false
+
+    return $null
 }
 
-# Main execution
+$transcriptStarted = $false
+
 try {
+    New-FolderIfMissing -Path $destRoot
+    New-FolderIfMissing -Path $logDir
+
+    Start-Transcript -Path $transcriptFile -Append | Out-Null
+    $transcriptStarted = $true
+
     Write-Log "Bootstrap starting"
 
-    # Wait for network connectivity
-    Write-Log "Waiting for network connectivity..."
-    if (-not (Test-NetworkReady)) {
-        throw "Network connectivity timeout - unable to reach github.com"
-    }
-    Write-Log "Network ready"
-
-    # Enable TLS 1.2 for secure downloads
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-    # Download repository
-    Write-Log "Downloading repository zip"
-    Invoke-WebRequest -Uri $repoZip -OutFile $zipFile -UseBasicParsing -ErrorAction Stop
-
-    # Extract repository
-    Write-Log "Extracting repository"
-    Expand-Archive -Path $zipFile -DestinationPath $dest -Force -ErrorAction Stop
-
-    # Rename extracted folder from win11-main to win11
-    $extractedFolder = Join-Path -Path $dest -ChildPath "win11-main"
-    $repoFolder = Join-Path -Path $dest -ChildPath "win11"
-    
-    if (Test-Path -Path $extractedFolder) {
-        if (Test-Path -Path $repoFolder) {
-            Remove-Item -Path $repoFolder -Recurse -Force
-        }
-        Rename-Item -Path $extractedFolder -NewName "win11" -Force
-        Write-Log "Renamed folder to win11"
+    $isoRoot = Get-IsoRoot
+    if (-not $isoRoot) {
+        throw "Could not locate ISO drive containing autounattend.xml"
     }
 
-    # Remove the zip file after extraction
-    # if (Test-Path -Path $zipFile) {
-    #     Remove-Item -Path $zipFile -Force -ErrorAction SilentlyContinue
-    # }
+    Write-Log "ISO root found at: $isoRoot"
 
-    # Run setup script
-    $setupScript = Join-Path -Path $repoFolder -ChildPath "setup.ps1"
+    $sourceRepo = Join-Path $isoRoot "repo"
+    if (-not (Test-Path -Path $sourceRepo)) {
+        throw "Repo folder not found on ISO: $sourceRepo"
+    }
 
-    if (Test-Path -Path $setupScript) {
-        Write-Log "Running setup.ps1"
-        &amp; powershell.exe -ExecutionPolicy Bypass -File $setupScript
-        $exitCode = $LASTEXITCODE
-        if ($exitCode -ne 0) {
-            Write-Log "setup.ps1 exited with code: $exitCode"
+    $setupScript = Join-Path $sourceRepo "setup.ps1"
+    if (-not (Test-Path -Path $setupScript)) {
+        throw "setup.ps1 not found in ISO repo folder: $setupScript"
+    }
+
+    if (Test-Path -Path $repoFolder) {
+        Write-Log "Removing existing destination folder: $repoFolder"
+        Remove-Item -Path $repoFolder -Recurse -Force
+    }
+
+    Write-Log "Copying repo from $sourceRepo to $repoFolder"
+    Copy-Item -Path $sourceRepo -Destination $repoFolder -Recurse -Force
+
+    $localSetupScript = Join-Path $repoFolder "setup.ps1"
+    if (-not (Test-Path -Path $localSetupScript)) {
+        throw "setup.ps1 not found after copy: $localSetupScript"
+    }
+
+    $versionFile = Join-Path $isoRoot "version.txt"
+    if (Test-Path -Path $versionFile) {
+        $version = Get-Content -Path $versionFile -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($version) {
+            Write-Log "ISO version: $version"
         }
     }
-    else {
-        throw "Setup script not found: $setupScript"
+
+    Write-Log "Running setup.ps1"
+    &amp; powershell.exe -NoProfile -ExecutionPolicy Bypass -File $localSetupScript
+
+    $exitCode = $LASTEXITCODE
+    if ($exitCode -ne 0) {
+        throw "setup.ps1 exited with code ${exitCode}"
     }
 
     Write-Log "Bootstrap finished successfully"
+
+    if ($transcriptStarted) {
+        Stop-Transcript | Out-Null
+        $transcriptStarted = $false
+    }
+
+    exit 0
 }
 catch {
     Write-Log "ERROR: $($_.Exception.Message)"
+
+    if ($transcriptStarted) {
+        Stop-Transcript | Out-Null
+        $transcriptStarted = $false
+    }
+
     exit 1
 }
 		</File>

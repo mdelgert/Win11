@@ -1,8 +1,8 @@
 #Requires -Version 5.1
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: 10-template.ps1"
-Write-Host "Description: Template for future scripts. Copy and paste this code into a new .ps1 file and modify as needed."
+Write-Host "Script: iso.ps1"
+Write-Host "Description: Downloads the latest unattend.iso from the GitHub releases."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
@@ -11,4 +11,4 @@ Write-Host "Working directory: $(Get-Location)"
 Write-Host "=============================================================="
 Write-Host ""
 
-Start-Sleep -Seconds 2
+Invoke-WebRequest -Uri 'https://github.com/mdelgert/win11/releases/latest/download/unattend.iso' -OutFile 'Z:\unattend.iso'

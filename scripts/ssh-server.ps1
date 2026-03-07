@@ -447,7 +447,7 @@ try {
                 Write-Log "Permissions set correctly on authorized_keys file" "SUCCESS"
                 
                 # Display key count
-                $keyCount = ($publicKeys -split "`n" | Where-Object { $_ -match '^ssh-' }).Count
+                $keyCount = @($publicKeys -split "`n" | Where-Object { $_ -match '^ssh-' }).Count
                 Write-Log "Successfully imported $keyCount SSH key(s)" "SUCCESS"
             }
         }

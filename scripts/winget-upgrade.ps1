@@ -5,9 +5,9 @@
 
 $ErrorActionPreference = 'Stop'
 
-$tag = 'v1.12.440'
 # $downloadUrl = "https://github.com/microsoft/winget-cli/releases/download/$tag/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 $downloadUrl = "https://github.com/microsoft/winget-cli/releases/download/v1.28.190/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+
 $tempDir = 'C:\Setup'
 $bundlePath = Join-Path $tempDir 'Microsoft.DesktopAppInstaller.msixbundle'
 

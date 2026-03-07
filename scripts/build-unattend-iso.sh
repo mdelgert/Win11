@@ -34,6 +34,7 @@ rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
 mkdir -p "$ISO_ROOT"
 mkdir -p "$ISO_ROOT/repo"
 # mkdir -p "$ISO_ROOT/tools/autologon"
+mkdir -p "$ISO_ROOT/tools/downloads"
 echo "$VERSION" > unattend.version.txt
 cp autounattend.xml "$ISO_ROOT/autounattend.xml"
 cp unattend.version.txt "$ISO_ROOT/unattend.version.txt"
@@ -45,6 +46,11 @@ rsync -av ./ "$ISO_ROOT/repo/" \
   --exclude 'iso-root' \
   --exclude '*.iso' \
   --exclude '*.zip'
+
+# Dowload winget update
+curl -fsSL \
+  https://github.com/microsoft/winget-cli/releases/download/v1.28.190/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle \
+  -o "$ISO_ROOT/downloads/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 
 # Download and extract AutoLogon tool from Sysinternals
 # curl -fsSL \

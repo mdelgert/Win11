@@ -36,8 +36,7 @@
 Description=Run unattend ISO updater hourly
 
 [Timer]
-#OnCalendar=hourly
-OnCalendar=*:0/5
+OnCalendar=hourly
 Persistent=true
 Unit=update-unattend-iso.service
 

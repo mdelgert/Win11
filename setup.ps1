@@ -17,15 +17,18 @@ $LogRoot = "C:\Setup\logs"
 
 $ScriptSets = @{
     default = @(
+        @{ File = "00-remove-autologoncount.ps1"}
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "1" } }
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "2" } }
-        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "firstReboot"; -PreviewOnly } }
+        #@{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
+        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
     )
 
     firstReboot = @(
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "A" } }
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "B" } }
-        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "secondReboot"; -PreviewOnly } }
+        #@{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "secondReboot"; PreviewOnly = $true } }
+        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
     )
 
     secondReboot = @(

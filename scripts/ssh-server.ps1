@@ -100,6 +100,35 @@ function Resolve-UserProfilePath {
     return $defaultProfilePath
 }
 
+# Function to set active network profiles to Private
+function Set-NetworkProfilePrivate {
+    Write-Log "Checking active network profile(s)..."
+
+    try {
+        $profiles = Get-NetConnectionProfile -ErrorAction Stop
+
+        if (-not $profiles) {
+            Write-Log "No network profiles were found." "WARNING"
+            return
+        }
+
+        foreach ($profile in $profiles) {
+            Write-Log "Network '$($profile.Name)' current category: $($profile.NetworkCategory)"
+
+            if ($profile.NetworkCategory -ne 'Private') {
+                Set-NetConnectionProfile -InterfaceIndex $profile.InterfaceIndex -NetworkCategory Private -ErrorAction Stop
+                Write-Log "Changed network '$($profile.Name)' to Private" "SUCCESS"
+            }
+            else {
+                Write-Log "Network '$($profile.Name)' is already Private" "SUCCESS"
+            }
+        }
+    }
+    catch {
+        Write-Log "Failed to set network profile to Private: $($_.Exception.Message)" "WARNING"
+    }
+}
+
 try {
     # Step 1: Check if running as Administrator
     Write-Log "Checking administrator privileges..."
@@ -189,16 +218,20 @@ try {
         Write-Log "Warning: Failed to configure SSH Agent service: $_" "WARNING"
     }
 
-    # Step 6: Configure firewall rule for SSH
+    # Step 6: Set trusted homelab network profile to Private
+    Write-Log "Setting trusted homelab network profile to Private..."
+    Set-NetworkProfilePrivate
+
+    # Step 7: Configure firewall rule for SSH
     Write-Log "Configuring firewall rule for port $SSHPort..."
     try {
         $firewallRule = Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue
         if ($null -eq $firewallRule) {
-            New-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -DisplayName "OpenSSH Server (sshd)" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort $SSHPort -ErrorAction Stop
+            New-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -DisplayName "OpenSSH Server (sshd)" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort $SSHPort -Profile Any -ErrorAction Stop
             Write-Log "Firewall rule created for port $SSHPort" "SUCCESS"
         }
         else {
-            Set-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -Enabled True -ErrorAction Stop
+            Set-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -Enabled True -Profile Any -ErrorAction Stop
             Write-Log "Firewall rule already exists and is enabled" "SUCCESS"
         }
     }
@@ -207,7 +240,7 @@ try {
         exit 1
     }
 
-    # Step 7: Configure sshd_config to allow admin users with individual authorized_keys
+    # Step 8: Configure sshd_config to allow admin users with individual authorized_keys
     Write-Log "Configuring SSH server settings..."
     $sshdConfigPath = "$env:ProgramData\ssh\sshd_config"
     
@@ -303,7 +336,7 @@ try {
         exit 1
     }
 
-    # Step 8: Create .ssh directory for target user
+    # Step 9: Create .ssh directory for target user
     Write-Log "Setting up .ssh directory for user $targetIdentity..."
     $sshDir = Join-Path -Path $targetUserProfilePath -ChildPath ".ssh"
     
@@ -321,7 +354,7 @@ try {
         Write-Log ".ssh directory already exists" "SUCCESS"
     }
 
-    # Step 9: Set correct permissions on .ssh directory
+    # Step 10: Set correct permissions on .ssh directory
     Write-Log "Setting permissions on .ssh directory..."
     try {
         $acl = Get-Acl -Path $sshDir
@@ -358,7 +391,7 @@ try {
         Write-Log "Failed to set permissions on .ssh directory: $_" "WARNING"
     }
 
-    # Step 10: Fetch SSH public keys from GitHub
+    # Step 11: Fetch SSH public keys from GitHub
     Write-Log "Fetching SSH public keys from GitHub for user: $GitHubUsername..."
     
     # Check internet connectivity
@@ -424,7 +457,7 @@ try {
         }
     }
 
-    # Step 11: Verify administrator group membership
+    # Step 12: Verify administrator group membership
     Write-Log "Verifying administrator privileges for user $targetIdentity..."
     try {
         $isInAdminGroup = $false

@@ -31,8 +31,8 @@ $LogRoot      = "C:\Setup\logs"
 $Scripts = @(
     "10-template.ps1"
     "10-template-iso-root.ps1"
-    "00-autologon.ps1"
-    "20-reboot.ps1"
+    # "00-autologon.ps1"
+    # "20-reboot.ps1"
     # "01-autologon-download.ps1"
     # "00-winget-upgrade.ps1"
     # "02-winget-configure-enable.ps1"
@@ -140,7 +140,8 @@ $logFile = Join-Path $LogRoot "setup-$runId.log"
 
 Start-Transcript -Path $logFile -Append | Out-Null
 
-Assert-Admin
+# Not needed for the current scripts, but good to assert early if future steps require admin rights.
+# Assert-Admin
 
 try {
     Write-Header -RepoRoot $RepoRoot -StepsDir $ScriptsDir -LogFile $logFile

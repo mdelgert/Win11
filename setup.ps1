@@ -1,50 +1,130 @@
 #Requires -Version 5.1
 # =========================================
-# Win11 Machine Setup (Windows PowerShell 5.1)
+# File: setup.ps1
 #
-# - Main entrypoint: setup.ps1 (repo root)
-# - Runs ordered step scripts from .\steps (explicit list, no auto-discovery)
-# - Logs to: C:\Setup\logs
+# Purpose:
+#   Main entrypoint for Windows 11 machine setup.
+#   Runs ordered groups of scripts from the .\scripts folder.
 #
-# IMPORTANT:
-# This script must remain compatible with Windows PowerShell 5.1.
-# Avoid PS 7+ features (e.g., ConvertFrom-Json -AsHashtable, ??, ForEach-Object -Parallel).
+# Features:
+#   - Uses a single entry script for all phases
+#   - Supports multiple named script groups via -ScriptSet
+#   - Writes a transcript log file
+#   - Writes timestamped log entries for key events
+#   - Can be reused after reboot by calling the same script
+#
+# Folder layout:
+#   repo-root\
+#     setup.ps1
+#     scripts\
+#       00-remove-autologoncount.ps1
+#       10-base.ps1
+#       20-tools.ps1
+#       ...
+#
+# Log location:
+#   C:\Setup\logs
+#
+# PowerShell compatibility:
+#   This script is intended for Windows PowerShell 5.1.
+#   Avoid PowerShell 7+ only features.
+#
+# Typical usage:
+#
+#   Run default group:
+#     powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Setup\win11\setup.ps1
+#
+#   Run a specific group:
+#     powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Setup\win11\setup.ps1 -ScriptSet resume
+#
+#   Dry run style flag forwarding:
+#     powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Setup\win11\setup.ps1 -ScriptSet apps -WhatIf
+#
+#   Resume after reboot using RunOnce:
+#     powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Setup\win11\setup.ps1 -ScriptSet postreboot
+#
+# Example script groups:
+#   - default
+#   - prereboot
+#   - postreboot
+#   - apps
+#   - finalize
+#   - resume
+#   - template
+#
+# Recommended pattern:
+#   1. Keep each child script focused on one job
+#   2. Let this launcher control ordering
+#   3. If reboot is required, register this same setup.ps1 in RunOnce
+#      with the next -ScriptSet value, then reboot
+#
+# Notes:
+#   - Child scripts are executed in the exact order listed below
+#   - Child scripts are expected to accept these parameters:
+#       -RepoRoot
+#       -WhatIf
+#       -DisableInteractivity
+#       -VerboseWinget
+#   - If a child script runs a native EXE and returns a non-zero exit code,
+#     this launcher will fail the run
 # =========================================
 
 [CmdletBinding()]
 param(
     [switch]$WhatIf,
     [switch]$DisableInteractivity,
-    [switch]$VerboseWinget
+    [switch]$VerboseWinget,
+    [string]$ScriptSet = "default"
 )
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 # ==========================
-# USER CONFIG (edit here)
+# USER CONFIG
 # ==========================
 $ScriptsDirName = "scripts"
-$LogRoot      = "C:\Setup\logs"
+$LogRoot        = "C:\Setup\logs"
 
-# Ordered list of scripts to run (filenames only, executed in this exact order)
-$Scripts = @(
-    "00-remove-autologoncount.ps1"
-    "99-resume.ps1"
-)
+# Ordered script groups.
+# Add or remove filenames as needed.
+$ScriptSets = @{
+    default = @(
+        "00-remove-autologoncount.ps1"
+        "01-user-once-source.ps1"
+        "10-base.ps1"
+    )
 
-# ==========================
+    prereboot = @(
+        "20-configure-autologon.ps1"
+        "21-prepare-reboot.ps1"
+    )
 
-function Assert-Admin {
-    if (-not (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
-    ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-        try {
-            Add-Content -LiteralPath $logFile -Value ("[{0}] Script is not running elevated." -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"))
-        }
-        catch {}
-        throw "Run in an elevated PowerShell (Run as Administrator)."
-    }
+    postreboot = @(
+        "30-post-reboot-validation.ps1"
+        "31-post-reboot-cleanup.ps1"
+    )
+
+    apps = @(
+        "40-install-git.ps1"
+        "41-install-vscode.ps1"
+        "42-install-firefox.ps1"
+    )
+
+    finalize = @(
+        "90-final-cleanup.ps1"
+        "99-finish.ps1"
+    )
+
+    resume = @(
+        "99-resume.ps1"
+    )
+
+    template = @(
+        "10-template.ps1"
+    )
 }
+# ==========================
 
 function New-FolderIfMissing {
     param(
@@ -57,20 +137,56 @@ function New-FolderIfMissing {
     }
 }
 
-function Write-Header([string]$RepoRoot, [string]$ScriptsDir, [string]$LogFile) {
-    Write-Host "RepoRoot: $RepoRoot"
-    Write-Host "StepsDir: $ScriptsDir"
-    Write-Host "LogFile:  $LogFile"
-    Write-Host ("PowerShell: {0}  Edition: {1}" -f $PSVersionTable.PSVersion, $PSVersionTable.PSEdition)
-    Write-Host ("Flags: WhatIf={0} DisableInteractivity={1} VerboseWinget={2}" -f $WhatIf, $DisableInteractivity, $VerboseWinget)
+function Write-Log {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $entry = "[{0}] {1}" -f $timestamp, $Message
+
+    Write-Host $entry
+
+    try {
+        Add-Content -LiteralPath $script:LogFile -Value $entry
+    }
+    catch {
+        Write-Host "[{0}] Failed to write to log file." -f $timestamp
+    }
+}
+
+function Assert-Admin {
+    if (-not (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
+    ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
+        try {
+            Add-Content -LiteralPath $script:LogFile -Value ("[{0}] Script is not running elevated." -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"))
+        }
+        catch {}
+        throw "Run in an elevated PowerShell (Run as Administrator)."
+    }
+}
+
+function Write-Header {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [Parameter(Mandatory = $true)][string]$ScriptsDir,
+        [Parameter(Mandatory = $true)][string]$LogFile
+    )
+
+    Write-Log ("RepoRoot: {0}" -f $RepoRoot)
+    Write-Log ("ScriptsDir: {0}" -f $ScriptsDir)
+    Write-Log ("LogFile: {0}" -f $LogFile)
+    Write-Log ("PowerShell: {0} Edition: {1}" -f $PSVersionTable.PSVersion, $PSVersionTable.PSEdition)
+    Write-Log ("Flags: WhatIf={0} DisableInteractivity={1} VerboseWinget={2} ScriptSet={3}" -f $WhatIf, $DisableInteractivity, $VerboseWinget, $ScriptSet)
 }
 
 function Invoke-StepScript {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true)][string]$Path,
-        [Parameter(Mandatory=$true)][string]$StepName,
-        [Parameter(Mandatory=$true)][string]$RepoRoot,
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$StepName,
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
         [switch]$WhatIf,
         [switch]$DisableInteractivity,
         [switch]$VerboseWinget
@@ -80,12 +196,8 @@ function Invoke-StepScript {
         throw "Missing step: $Path"
     }
 
-    Write-Host ""
-    Write-Host "=== Running step: $StepName ==="
+    Write-Log ("Starting step: {0}" -f $StepName)
 
-    # StrictMode-safe handling of LASTEXITCODE:
-    # - It might be undefined unless a native EXE has run.
-    # - We snapshot whether it existed and its previous value.
     $hadLastExitCode = Test-Path variable:LASTEXITCODE
     $prevLastExitCode = if ($hadLastExitCode) { $global:LASTEXITCODE } else { $null }
 
@@ -99,14 +211,13 @@ function Invoke-StepScript {
     }
     catch {
         $sw.Stop()
-        Write-Host ("!!! Step threw an error: {0} ({1}s)" -f $StepName, [int]$sw.Elapsed.TotalSeconds)
+        Write-Log ("Step threw an error: {0} ({1}s)" -f $StepName, [int]$sw.Elapsed.TotalSeconds)
         throw
     }
     finally {
         $sw.Stop()
     }
 
-    # If the step ran a native EXE, LASTEXITCODE may have changed.
     if (Test-Path variable:LASTEXITCODE) {
         $currentExit = $global:LASTEXITCODE
         $changed =
@@ -118,33 +229,36 @@ function Invoke-StepScript {
         }
     }
 
-    Write-Host ("--- Step complete: {0} ({1}s)" -f $StepName, [int]$sw.Elapsed.TotalSeconds)
+    Write-Log ("Step complete: {0} ({1}s)" -f $StepName, [int]$sw.Elapsed.TotalSeconds)
 }
 
 # -------------------------
 # MAIN
 # -------------------------
-$RepoRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
+$RepoRoot   = (Resolve-Path -LiteralPath $PSScriptRoot).Path
 $ScriptsDir = Join-Path $RepoRoot $ScriptsDirName
 
-New-FolderIfMissing $LogRoot
-$runId   = (Get-Date).ToString("yyyyMMdd-HHmmss")
-$logFile = Join-Path $LogRoot "setup-$runId.log"
+New-FolderIfMissing -Path $LogRoot
+$runId = (Get-Date).ToString("yyyyMMdd-HHmmss")
+$script:LogFile = Join-Path $LogRoot ("setup-{0}-{1}.log" -f $ScriptSet, $runId)
 
-Start-Transcript -Path $logFile -Append | Out-Null
-
-# Not needed for the current scripts, but good to assert early if future steps require admin rights.
-# Assert-Admin
+Start-Transcript -Path $script:LogFile -Append | Out-Null
 
 try {
-    Write-Header -RepoRoot $RepoRoot -StepsDir $ScriptsDir -LogFile $logFile
+    Write-Header -RepoRoot $RepoRoot -ScriptsDir $ScriptsDir -LogFile $script:LogFile
 
     if (-not (Test-Path -LiteralPath $ScriptsDir)) {
-        throw "Steps folder not found: $ScriptsDir"
+        throw "Scripts folder not found: $ScriptsDir"
     }
 
+    if (-not $ScriptSets.ContainsKey($ScriptSet)) {
+        throw "Unknown ScriptSet '$ScriptSet'. Valid values: $($ScriptSets.Keys -join ', ')"
+    }
+
+    $Scripts = $ScriptSets[$ScriptSet]
+
     if (-not $Scripts -or $Scripts.Count -eq 0) {
-        throw "No steps defined in `$Scripts. Add filenames to the list at the top."
+        throw "No scripts defined for ScriptSet '$ScriptSet'."
     }
 
     foreach ($step in $Scripts) {
@@ -159,16 +273,14 @@ try {
             -VerboseWinget:$VerboseWinget
     }
 
-    Write-Host ""
-    Write-Host "Setup complete."
+    Write-Log "Setup complete."
 }
 catch {
-    Write-Host ""
-    Write-Host "SETUP FAILED."
-    Write-Host $_.Exception.ToString()
+    Write-Log "SETUP FAILED."
+    Write-Log $_.Exception.ToString()
     throw
 }
 finally {
     try { Stop-Transcript | Out-Null } catch {}
-    Write-Host "Log saved: $logFile"
+    Write-Host "Log saved: $script:LogFile"
 }

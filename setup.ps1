@@ -18,10 +18,8 @@ $LogRoot = "C:\Setup\logs"
 $ScriptSets = @{
     default = @(
         @{ File = "remove-autologoncount.ps1"}
-        @{ File = "template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "1" } }
-        @{ File = "template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "2" } }
-        #@{ File = "resume.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
-        @{ File = "resume.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
+        @{ File = "ssh.ps1"}
+        #@{ File = "resume.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
     )
 
     firstReboot = @(

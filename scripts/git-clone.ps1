@@ -1,27 +1,23 @@
 #Requires -Version 5.1
 
-[CmdletBinding()]
-param(
-    [string]$ScriptSet = "",
-    [string]$TestParam = ""
-)
-
 $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: winget-configure-baseline.ps1"
-Write-Host "Description: Configure baseline winget settings."
+Write-Host "Script: git-clone.ps1"
+Write-Host "Description: Clone the source repository."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
 Write-Host "OS Version: $([Environment]::OSVersion.Version)"
 Write-Host "Working directory: $(Get-Location)"
-Write-Host "ScriptSet: $ScriptSet"
-Write-Host "TestParam: $TestParam"
 Write-Host "=============================================================="
 Write-Host ""
 
-winget configure -f C:\Setup\win11\.config\baseline.dsc.winget --accept-configuration-agreements
+# Clone the repository
+$repoUrl = "https://github.com/mdelgert/win11.git"
+$destinationPath = "C:\source\win11"
+
+git clone $repoUrl $destinationPath
 
 Start-Sleep -Seconds 1

@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 <#
-File: 99-resume.ps1
+File: runonce.ps1
 
 Purpose:
   Register setup.ps1 in RunOnce, optionally pass the next script group,
@@ -48,7 +48,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: resume.ps1"
+Write-Host "Script: runonce.ps1"
 Write-Host "Description: Register setup.ps1 in RunOnce and reboot."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"

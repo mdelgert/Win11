@@ -1,26 +1,27 @@
+#Requires -Version 5.1
+
+[CmdletBinding()]
+param(
+    [string]$ScriptSet = "",
+    [string]$TestParam = ""
+)
+
+$ErrorActionPreference = "Stop"
+
 Write-Host ""
-Write-Host "==============================="
-Write-Host "Running winget-configure-enable.ps1"
+Write-Host "=============================================================="
+Write-Host "Script: winget-configure-enable.ps1"
+Write-Host "Description: Enable winget configuration."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
-Write-Host "==============================="
+Write-Host "OS Version: $([Environment]::OSVersion.Version)"
+Write-Host "Working directory: $(Get-Location)"
+Write-Host "ScriptSet: $ScriptSet"
+Write-Host "TestParam: $TestParam"
+Write-Host "=============================================================="
 Write-Host ""
-Start-Sleep -Seconds 2
 
-$timeout = [datetime]::Now.AddMinutes(5)
-$exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
+winget configure --enable
 
-# Enable winget configuration
-while ($true) {
-    if ($exe | Test-Path) {
-        & $exe configure --enable
-        break
-    }
-    if ([datetime]::Now -gt $timeout) {
-        Write-Warning "File '${exe}' does not exist."
-        return
-    }
-    Write-Host "Waiting for '${exe}' to become available..."
-    Start-Sleep -Seconds 1
-}
+Start-Sleep -Seconds 1

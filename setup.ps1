@@ -31,7 +31,7 @@ $LogRoot      = "C:\Setup\logs"
 $Scripts = @(
     "10-template.ps1"
     "10-template-iso-root.ps1"
-    "01-autologon-enable.ps1"
+    "00-autologon.ps1"
     "20-reboot.ps1"
     # "01-autologon-download.ps1"
     # "00-winget-upgrade.ps1"

@@ -30,7 +30,7 @@ $LogRoot      = "C:\Setup\logs"
 # Ordered list of scripts to run (filenames only, executed in this exact order)
 $Scripts = @(
     "10-template.ps1"
-    "01-autologon-enable.ps1"
+    # "01-autologon-enable.ps1"
     # "01-autologon-download.ps1"
     # "00-winget-upgrade.ps1"
     # "02-winget-configure-enable.ps1"
@@ -50,12 +50,6 @@ function Assert-Admin {
         throw "Run in an elevated PowerShell (Run as Administrator)."
     }
 }
-
-# function Ensure-Folder([string]$Path) {
-#     if (-not (Test-Path -LiteralPath $Path)) {
-#         New-Item -ItemType Directory -Path $Path -Force | Out-Null
-#     }
-# }
 
 function New-FolderIfMissing {
     param(

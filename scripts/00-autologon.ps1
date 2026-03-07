@@ -1,0 +1,12 @@
+#Requires -Version 5.1
+Write-Host ""
+Write-Host "=============================================================="
+Write-Host "Script: 00-autologon.ps1"
+Write-Host "Description: Enable automatic logon for a specified user account."
+Write-Host "Machine: $env:COMPUTERNAME"
+Write-Host "User: $env:USERNAME"
+Write-Host "Time: $(Get-Date)"
+Write-Host "OS Version: $([Environment]::OSVersion.Version)"
+Write-Host "Working directory: $(Get-Location)"
+Write-Host "=============================================================="
+Write-Host ""

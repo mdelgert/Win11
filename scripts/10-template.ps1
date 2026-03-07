@@ -11,4 +11,24 @@ Write-Host "Working directory: $(Get-Location)"
 Write-Host "=============================================================="
 Write-Host ""
 
-Start-Sleep -Seconds 2
+function Get-IsoRoot {
+    $drives = Get-PSDrive -PSProvider FileSystem
+
+    foreach ($drive in $drives) {
+        # Check for unattend.version.txt as unique marker (Windows ISO may also have autounattend.xml)
+        $versionMarker = Join-Path $drive.Root "unattend.version.txt"
+        $autounattendMarker = Join-Path $drive.Root "autounattend.xml"
+        
+        if ((Test-Path -Path $versionMarker) -and (Test-Path -Path $autounattendMarker)) {
+            return $drive.Root
+        }
+    }
+
+    return $null
+}
+
+$isoRoot = Get-IsoRoot
+
+Write-Host "ISO Root Directory: $isoRoot"
+
+# Start-Sleep -Seconds 2

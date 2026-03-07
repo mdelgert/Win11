@@ -1,10 +1,10 @@
-name: Build unattend.iso
+name: Build media.iso
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - media
+    tags:
+      - 'media-*'
 
 jobs:
   build:
@@ -29,3 +29,19 @@ jobs:
             media.iso
             media.iso.sha256
             media.version.txt
+
+      - name: Publish media release
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/media-')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/media-') && github.ref_name || 'media-latest' }}
+          name: ${{ startsWith(github.ref, 'refs/tags/media-') && format('Media ISO ({0})', github.ref_name) || 'Media ISO (latest)' }}
+          prerelease: true
+          make_latest: false
+          files: |
+            media.iso
+            media.iso.sha256
+            media.version.txt
+          body: |
+            Automated media ISO build from `${{ github.ref_name }}`.
+            Commit: `${{ github.sha }}`

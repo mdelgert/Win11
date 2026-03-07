@@ -96,6 +96,7 @@ try {
     # Print script path
     Write-Log "Setup script path: $setupScript"
 
+    # Run setup script
     if (Test-Path -Path $setupScript) {
         Write-Log "Running setup.ps1"
         & powershell.exe -ExecutionPolicy Bypass -File $setupScript

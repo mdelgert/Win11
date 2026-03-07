@@ -32,6 +32,11 @@ curl -L -o unattend.iso https://github.com/mdelgert/win11/releases/latest/downlo
 Invoke-WebRequest -Uri 'https://github.com/mdelgert/win11/releases/latest/download/unattend.iso' -OutFile 'unattend.iso'
 ```
 
+### Clone the repo
+```bash
+git clone git@github.com:mdelgert/win11.git
+```
+
 ## Links
 - [Proxmox README](proxmox/README.md)
 - [unattend.iso](https://github.com/mdelgert/win11/releases/latest/download/unattend.iso) - Latest release

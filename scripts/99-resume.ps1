@@ -33,12 +33,15 @@ Notes:
   - Uses HKLM RunOnce, so it should run elevated
   - The RunOnce entry is consumed automatically by Windows after execution
   - Keep the NextScriptSet value aligned with a valid ScriptSet in setup.ps1
+
+  99-resume.ps1 -NextScriptSet secondReboot -DelaySeconds 5 -PreviewOnly
 #>
 
 [CmdletBinding()]
 param(
-    [string]$NextScriptSet = "default",
-    [int]$DelaySeconds = 3
+  [string]$NextScriptSet = "default",
+  [int]$DelaySeconds = 3,
+  [switch]$PreviewOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -54,6 +57,7 @@ Write-Host "OS Version: $([Environment]::OSVersion.Version)"
 Write-Host "Working directory: $(Get-Location)"
 Write-Host "NextScriptSet: $NextScriptSet"
 Write-Host "DelaySeconds: $DelaySeconds"
+Write-Host "PreviewOnly: $PreviewOnly"
 Write-Host "=============================================================="
 Write-Host ""
 
@@ -70,9 +74,22 @@ if ([string]::IsNullOrWhiteSpace($NextScriptSet)) {
 
 $resumeCommand = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$setupScript`" -ScriptSet $NextScriptSet"
 
+Write-Host "Execution plan:"
+Write-Host "1) Ensure setup script exists: $setupScript"
+Write-Host "2) Write RunOnce value: HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce\ResumeWin11Setup"
+Write-Host "3) Value command: $resumeCommand"
+Write-Host "4) Wait $DelaySeconds second(s)"
+Write-Host "5) Restart computer"
+Write-Host ""
+
 Write-Host "RunOnce path: $runOncePath"
 Write-Host "Resume command:"
 Write-Host $resumeCommand
+
+if ($PreviewOnly) {
+  Write-Host "PreviewOnly is set. No registry changes were made and no reboot will occur."
+  return
+}
 
 New-Item -Path $runOncePath -Force | Out-Null
 Set-ItemProperty -Path $runOncePath -Name 'ResumeWin11Setup' -Value $resumeCommand

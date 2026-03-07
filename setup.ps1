@@ -19,11 +19,13 @@ $ScriptSets = @{
     default = @(
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "1" } }
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "2" } }
+        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "firstReboot"; -PreviewOnly } }
     )
 
     firstReboot = @(
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "A" } }
         @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "B" } }
+        @{ File = "99-resume.ps1"; Params = @{ NextScriptSet = "secondReboot"; -PreviewOnly } }
     )
 
     secondReboot = @(

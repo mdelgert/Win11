@@ -33,7 +33,7 @@ rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
 
 mkdir -p "$ISO_ROOT"
 mkdir -p "$ISO_ROOT/repo"
-mkdir -p "$ISO_ROOT/tools/autologon"
+# mkdir -p "$ISO_ROOT/tools/autologon"
 echo "$VERSION" > unattend.version.txt
 cp autounattend.xml "$ISO_ROOT/autounattend.xml"
 cp unattend.version.txt "$ISO_ROOT/unattend.version.txt"

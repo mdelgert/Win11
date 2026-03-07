@@ -1,6 +1,6 @@
 Write-Host ""
 Write-Host "==============================="
-Write-Host "Running 01-winget-configure.ps1"
+Write-Host "Running winget-configure.ps1"
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"

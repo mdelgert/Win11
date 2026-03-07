@@ -10,7 +10,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: 100-template.ps1"
+Write-Host "Script: template.ps1"
 Write-Host "Description: Simple template script."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"

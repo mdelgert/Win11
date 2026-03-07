@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: 00-remove-autologoncount.ps1"
+Write-Host "Script: remove-autologoncount.ps1"
 Write-Host "Description: Wait for Winlogon AutoLogonCount to appear, then remove it."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"

@@ -39,22 +39,22 @@ cp autounattend.xml "$ISO_ROOT/autounattend.xml"
 cp unattend.version.txt "$ISO_ROOT/unattend.version.txt"
 
 rsync -av ./ "$ISO_ROOT/repo/" \
+  --exclude 'archieve' \
   --exclude '.git' \
   --exclude '.github' \
   --exclude 'iso-root' \
   --exclude '*.iso' \
   --exclude '*.zip'
 
-curl -fsSL \
-  https://download.sysinternals.com/files/AutoLogon.zip \
-  -o "$ISO_ROOT/tools/AutoLogon.zip"
+# Download and extract AutoLogon tool from Sysinternals
+# curl -fsSL \
+#   https://download.sysinternals.com/files/AutoLogon.zip \
+#   -o "$ISO_ROOT/tools/AutoLogon.zip"
 
-#unzip -o "$ISO_ROOT/tools/AutoLogon.zip" -d "$ISO_ROOT/tools/autologon"
-
-unzip -o "$ISO_ROOT/tools/AutoLogon.zip" -d "$ISO_ROOT/tools"
-find "$ISO_ROOT/tools" -type f ! -name 'Autologon.exe' -delete
-find "$ISO_ROOT/tools" -mindepth 1 -type d -empty -delete
-rm -f "$ISO_ROOT/tools/AutoLogon.zip"
+# unzip -o "$ISO_ROOT/tools/AutoLogon.zip" -d "$ISO_ROOT/tools"
+# find "$ISO_ROOT/tools" -type f ! -name 'Autologon.exe' -delete
+# find "$ISO_ROOT/tools" -mindepth 1 -type d -empty -delete
+# rm -f "$ISO_ROOT/tools/AutoLogon.zip"
 
 # Create the ISO image
 genisoimage \

@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: iso.ps1"
+Write-Host "Script: get-iso.ps1"
 Write-Host "Description: Downloads the latest unattend.iso from the GitHub releases."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"

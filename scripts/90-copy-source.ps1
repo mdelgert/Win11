@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: 99-copy-source.ps1"
+Write-Host "Script: 90-copy-source.ps1"
 Write-Host "Description: Script to copy/refresh source files from the repository."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"

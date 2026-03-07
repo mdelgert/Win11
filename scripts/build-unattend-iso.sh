@@ -47,11 +47,6 @@ rsync -av ./ "$ISO_ROOT/repo/" \
   --exclude '*.iso' \
   --exclude '*.zip'
 
-# Dowload winget update
-curl -fsSL \
-  https://github.com/microsoft/winget-cli/releases/download/v1.28.190/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle \
-  -o "$ISO_ROOT/downloads/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
-
 # Download and extract AutoLogon tool from Sysinternals
 # curl -fsSL \
 #   https://download.sysinternals.com/files/AutoLogon.zip \

@@ -17,23 +17,26 @@ $LogRoot = "C:\Setup\logs"
 
 $ScriptSets = @{
     default = @(
+        @{ File = "template.ps1"; Params = @{ ScriptSet = "default"} }
         @{ File = "remove-autologoncount.ps1"}
         @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
-        #@{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
-        @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
     )
     
     firstReboot = @(
-        @{ File = "winget-configure-enable.ps1"}
-        @{ File = "winget-configure-baseline.ps1"}
-        #@{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"; PreviewOnly = $true } }
-        @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
+        @{ File = "template.ps1"; Params = @{ ScriptSet = "firstReboot";} }
+        # @{ File = "winget-configure-enable.ps1"}
+        # @{ File = "winget-configure-baseline.ps1"}
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
     )
 
     secondReboot = @(
          @{ File = "vscodemenu.ps1"}
          @{ File = "git-config.ps1"}
          @{ File = "git-clone.ps1"}
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
         # @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "1" } }
         # @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "2" } }
     )

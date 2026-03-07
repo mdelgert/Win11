@@ -13,7 +13,22 @@ Write-Host "OS Version: $([Environment]::OSVersion.Version)"
 Write-Host "=============================================================="
 Write-Host ""
 
-$installerPath = 'D:\media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'
+function Get-IsoRoot {
+    $drives = Get-PSDrive -PSProvider FileSystem
+
+    foreach ($drive in $drives) {
+        $versionMarker = Join-Path $drive.Root "media.version.txt"
+        
+        if (Test-Path -Path $versionMarker) {
+            return $drive.Root
+        }
+    }
+
+    return $null
+}
+
+$isoRoot = Get-IsoRoot
+$installerPath = Join-Path $isoRoot "media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 
 try {
     if (-not (Test-Path -Path $installerPath)) {

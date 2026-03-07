@@ -30,7 +30,9 @@ $LogRoot      = "C:\Setup\logs"
 # Ordered list of scripts to run (filenames only, executed in this exact order)
 $Scripts = @(
     "10-template.ps1"
-    # "01-autologon-enable.ps1"
+    "10-template-iso-root.ps1"
+    "01-autologon-enable.ps1"
+    "20-reboot.ps1"
     # "01-autologon-download.ps1"
     # "00-winget-upgrade.ps1"
     # "02-winget-configure-enable.ps1"

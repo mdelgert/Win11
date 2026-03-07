@@ -60,8 +60,10 @@ function Get-IsoRoot {
     $drives = Get-PSDrive -PSProvider FileSystem
 
     foreach ($drive in $drives) {
-        $marker = Join-Path $drive.Root "autounattend.xml"
-        if (Test-Path -Path $marker) {
+        $versionMarker = Join-Path $drive.Root "unattend.version.txt"
+        $autounattendMarker = Join-Path $drive.Root "autounattend.xml"
+        
+        if ((Test-Path -Path $versionMarker) -and (Test-Path -Path $autounattendMarker)) {
             return $drive.Root
         }
     }
@@ -82,7 +84,7 @@ try {
 
     $isoRoot = Get-IsoRoot
     if (-not $isoRoot) {
-        throw "Could not locate ISO drive containing autounattend.xml"
+        throw "Could not locate ISO drive containing autounattend.xml and unattend.version.txt"
     }
 
     Write-Log "ISO root found at: $isoRoot"
@@ -110,7 +112,7 @@ try {
         throw "setup.ps1 not found after copy: $localSetupScript"
     }
 
-    $versionFile = Join-Path $isoRoot "version.txt"
+    $versionFile = Join-Path $isoRoot "unattend.version.txt"
     if (Test-Path -Path $versionFile) {
         $version = Get-Content -Path $versionFile -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($version) {

@@ -1,1 +1,0 @@
-powershell.exe -ExecutionPolicy Bypass -File "C:\source\win11\setup.ps1"

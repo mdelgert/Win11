@@ -145,7 +145,7 @@ function Write-Log {
         Add-Content -LiteralPath $script:LogFile -Value $entry
     }
     catch {
-        Write-Host "[{0}] Failed to write to log file." -f $timestamp
+        Write-Host ("[{0}] Failed to write to log file." -f $timestamp)
     }
 }
 
@@ -180,6 +180,7 @@ function Invoke-StepScript {
         [Parameter(Mandatory = $true)][string]$Path,
         [Parameter(Mandatory = $true)][string]$StepName,
         [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [hashtable]$ExtraParams = @{},
         [switch]$WhatIf,
         [switch]$DisableInteractivity,
         [switch]$VerboseWinget
@@ -200,7 +201,8 @@ function Invoke-StepScript {
             -RepoRoot $RepoRoot `
             -WhatIf:$WhatIf `
             -DisableInteractivity:$DisableInteractivity `
-            -VerboseWinget:$VerboseWinget
+            -VerboseWinget:$VerboseWinget `
+            @ExtraParams
     }
     catch {
         $sw.Stop()
@@ -255,12 +257,24 @@ try {
     }
 
     foreach ($step in $Scripts) {
-        $path = Join-Path $ScriptsDir $step
+        # Parse step entry: "scriptname.ps1 Param1=Value1 Param2=Value2"
+        $tokens = $step -split '\s+'
+        $scriptFile = $tokens[0]
+        $path = Join-Path $ScriptsDir $scriptFile
+
+        # Parse extra parameters (Key=Value format)
+        $extraParams = @{}
+        for ($i = 1; $i -lt $tokens.Count; $i++) {
+            if ($tokens[$i] -match '^([^=]+)=(.*)$') {
+                $extraParams[$Matches[1]] = $Matches[2]
+            }
+        }
 
         Invoke-StepScript `
             -Path $path `
             -StepName $step `
             -RepoRoot $RepoRoot `
+            -ExtraParams $extraParams `
             -WhatIf:$WhatIf `
             -DisableInteractivity:$DisableInteractivity `
             -VerboseWinget:$VerboseWinget

@@ -46,7 +46,8 @@
 
 set -euo pipefail
 
-ISO_DIR="/var/lib/vz/template/iso"
+#ISO_DIR="/var/lib/vz/template/iso"
+ISO_DIR="/mnt/pve/downloads/template/iso"
 ISO_NAME="unattend.iso"
 ISO_PATH="${ISO_DIR}/${ISO_NAME}"
 

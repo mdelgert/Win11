@@ -76,11 +76,11 @@
 
 set -euo pipefail
 
+#ISO_FILE="/var/lib/vz/template/iso/unattend.iso"
+ISO_FILE="/mnt/pve/downloads/template/iso/unattend.iso"
 SERVICE_FILE="/etc/systemd/system/update-unattend-iso.service"
 TIMER_FILE="/etc/systemd/system/update-unattend-iso.timer"
 SCRIPT_FILE="/root/scripts/update-unattend-iso.sh"
-
-ISO_FILE="/var/lib/vz/template/iso/unattend.iso"
 VERSION_FILE="/var/lib/vz/template/iso/unattend.version.txt"
 LOG_DIR="/var/log/unattend-iso"
 

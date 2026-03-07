@@ -17,11 +17,11 @@ $LogRoot = "C:\Setup\logs"
 
 $ScriptSets = @{
     default = @(
-        @{ File = "remove-autologoncount.ps1"}
-        @{ File = "ssh.ps1"}
+        #@{ File = "remove-autologoncount.ps1"}
+        @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
         #@{ File = "resume.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
     )
-
+    
     firstReboot = @(
         @{ File = "template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "A" } }
         @{ File = "template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "B" } }

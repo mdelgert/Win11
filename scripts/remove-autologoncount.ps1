@@ -65,6 +65,6 @@ for ($attempt = 1; $attempt -le $maxRetries; $attempt++) {
     Start-Sleep -Seconds $delaySeconds
 }
 
-if (-not $found) {
-    throw "Registry value '$valueName' was not found after $maxRetries attempts."
-}
+# if (-not $found) {
+#     throw "Registry value '$valueName' was not found after $maxRetries attempts."
+# }

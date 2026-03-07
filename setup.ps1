@@ -90,38 +90,31 @@ $LogRoot        = "C:\Setup\logs"
 # Add or remove filenames as needed.
 $ScriptSets = @{
     default = @(
-        "00-remove-autologoncount.ps1"
-        "01-user-once-source.ps1"
-        "10-base.ps1"
+        "100-template.ps1 ScriptSet=default"
     )
 
     prereboot = @(
-        "20-configure-autologon.ps1"
-        "21-prepare-reboot.ps1"
+        "100-template.ps1 ScriptSet=prereboot"
     )
 
     postreboot = @(
-        "30-post-reboot-validation.ps1"
-        "31-post-reboot-cleanup.ps1"
+        "100-template.ps1 ScriptSet=postreboot"
     )
 
     apps = @(
-        "40-install-git.ps1"
-        "41-install-vscode.ps1"
-        "42-install-firefox.ps1"
+        "100-template.ps1 ScriptSet=apps"
     )
 
     finalize = @(
-        "90-final-cleanup.ps1"
-        "99-finish.ps1"
+        "100-template.ps1 ScriptSet=finalize"
     )
 
     resume = @(
-        "99-resume.ps1"
+        "100-template.ps1 ScriptSet=resume"
     )
 
     template = @(
-        "10-template.ps1"
+        "100-template.ps1 ScriptSet=template"
     )
 }
 # ==========================

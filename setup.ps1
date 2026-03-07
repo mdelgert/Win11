@@ -1,5 +1,9 @@
 #Requires -Version 5.1
 
+# .\setup.ps1
+# .\setup.ps1 -ScriptSet firstReboot
+# .\setup.ps1 -ScriptSet secondReboot
+
 [CmdletBinding()]
 param(
     [string]$ScriptSet = "default"
@@ -13,16 +17,18 @@ $LogRoot = "C:\Setup\logs"
 
 $ScriptSets = @{
     default = @(
-        @{ File = "100-template.ps1"; Args = @("-ScriptSet", "default", "-TestParam", "1") }
-        @{ File = "100-template.ps1"; Args = @("-ScriptSet", "default", "-TestParam", "2") }
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "1" } }
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "default"; TestParam = "2" } }
     )
 
-    prereboot = @(
-        @{ File = "100-template.ps1"; Args = @("-ScriptSet", "prereboot", "-TestParam", "A") }
+    firstReboot = @(
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "A" } }
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "firstReboot"; TestParam = "B" } }
     )
 
-    postreboot = @(
-        @{ File = "100-template.ps1"; Args = @("-ScriptSet", "postreboot", "-TestParam", "B") }
+    secondReboot = @(
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "1" } }
+        @{ File = "100-template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "2" } }
     )
 }
 
@@ -52,7 +58,7 @@ function Invoke-ChildScript {
         [Parameter(Mandatory = $true)]
         [string]$Path,
 
-        [string[]]$Args = @()
+        [hashtable]$ScriptParams = @{}
     )
 
     if (-not (Test-Path -LiteralPath $Path)) {
@@ -61,11 +67,12 @@ function Invoke-ChildScript {
 
     Write-Log ("Running: {0}" -f $Path)
 
-    if ($Args.Count -gt 0) {
-        Write-Log ("Args: {0}" -f ($Args -join " "))
+    if ($ScriptParams.Count -gt 0) {
+        $paramsText = ($ScriptParams.GetEnumerator() | ForEach-Object { "-{0} {1}" -f $_.Key, $_.Value }) -join " "
+        Write-Log ("Params: {0}" -f $paramsText)
     }
 
-    & $Path @Args
+    & $Path @ScriptParams
 }
 
 $RepoRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
@@ -88,13 +95,18 @@ try {
 
     foreach ($step in $ScriptSets[$ScriptSet]) {
         $path = Join-Path $ScriptsDir $step.File
-        $args = @()
+        $scriptParams = @{}
 
-        if ($step.ContainsKey("Args")) {
-            $args = [string[]]$step.Args
+        if ($step.ContainsKey("Params")) {
+            $scriptParams = [hashtable]$step.Params
         }
 
-        Invoke-ChildScript -Path $path -Args $args
+        $invokeParams = @{
+            Path = $path
+            ScriptParams = $scriptParams
+        }
+
+        Invoke-ChildScript @invokeParams
     }
 
     Write-Log "Setup complete."

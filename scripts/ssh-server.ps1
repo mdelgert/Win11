@@ -28,7 +28,8 @@ $SSHPort = 22
 function Write-Log {
     param([string]$Message, [string]$Level = "INFO")
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $color = switch($Level) {
+
+    $color = switch ($Level) {
         "ERROR" { "Red" }
         "WARNING" { "Yellow" }
         "SUCCESS" { "Green" }
@@ -468,5 +469,3 @@ catch {
     Write-Log "Stack trace: $($_.ScriptStackTrace)" "ERROR"
     exit 1
 }
-
-Start-Sleep -Seconds 2

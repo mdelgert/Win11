@@ -19,6 +19,7 @@ $ScriptSets = @{
     default = @(
         @{ File = "template.ps1"; Params = @{ ScriptSet = "default"} }
         @{ File = "remove-autologoncount.ps1"}
+        @{ File = "winget-update.ps1"}
         @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
         # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
         # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"} }
@@ -26,9 +27,9 @@ $ScriptSets = @{
     
     firstReboot = @(
         @{ File = "template.ps1"; Params = @{ ScriptSet = "firstReboot";} }
-        # @{ File = "winget-configure-enable.ps1"}
-        # @{ File = "winget-configure-baseline.ps1"}
-        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
+        @{ File = "winget-configure-enable.ps1"}
+        @{ File = "winget-configure-baseline.ps1"}
+        @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
     )
 
     secondReboot = @(

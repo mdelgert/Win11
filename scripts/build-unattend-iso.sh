@@ -69,6 +69,6 @@ sha256sum unattend.iso > unattend.iso.sha256
 # Test running the script without errors and that the expected files are created. In a real test, you would want to mount the ISO and verify its contents.
 # chmod +x ./scripts/build-unattend-iso.sh
 # ./scripts/build-unattend-iso.sh
-cp unattend.iso ../
-rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
+#cp unattend.iso ../
+#rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
 #########################################################################################################

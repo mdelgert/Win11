@@ -14,6 +14,6 @@ Write-Host "Working directory: $(Get-Location)"
 Write-Host "=============================================================="
 Write-Host ""
 
-winget configure -f C:\source\win11\.config\learn_csharp_vs_community.winget --accept-configuration-agreements
+winget configure -f C:\source\win11\.config\csharp_community.winget --accept-configuration-agreements
 
 Start-Sleep -Seconds 1

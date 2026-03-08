@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "=============================================================="
-Write-Host "Script: winget-configure-test.ps1"
-Write-Host "Description: Configure baseline winget settings."
+Write-Host "Script: winget-configure-tools.ps1"
+Write-Host "Description: Configure development tools."
 Write-Host "Machine: $env:COMPUTERNAME"
 Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
@@ -16,6 +16,8 @@ Write-Host "TestParam: $TestParam"
 Write-Host "=============================================================="
 Write-Host ""
 
-winget configure -f C:\Source\win11\.config\test.dsc.winget --accept-configuration-agreements
+#winget configure -f C:\Source\win11\.config\vs2022.dsc.winget --accept-configuration-agreements
+winget configure -f C:\Source\win11\.config\vs2026.dsc.winget --accept-configuration-agreements
+winget configure -f C:\source\win11\.config\sms22.dsc.winget --accept-configuration-agreements
 
 Start-Sleep -Seconds 1

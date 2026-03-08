@@ -22,4 +22,27 @@ Write-Host "TestParam: $TestParam"
 Write-Host "=============================================================="
 Write-Host ""
 
+function Get-IsoRoot {
+    $drives = Get-PSDrive -PSProvider FileSystem
+
+    foreach ($drive in $drives) {
+        $autounattendFile = Join-Path -Path $drive.Root -ChildPath "autounattend.xml"
+        $versionMarker = Join-Path -Path $drive.Root -ChildPath "unattend.version.txt"
+
+        if ((Test-Path -Path $autounattendFile) -and (Test-Path -Path $versionMarker)) {
+            return $drive.Root
+        }
+    }
+
+    return $null
+}
+
+# Example usage of Get-IsoRoot function
+$isoRoot = Get-IsoRoot
+if ([string]::IsNullOrWhiteSpace($isoRoot)) {
+    Write-Host "ISO media root not found."
+} else {
+    Write-Host "ISO media root found at: $isoRoot"
+}
+
 Start-Sleep -Seconds 1

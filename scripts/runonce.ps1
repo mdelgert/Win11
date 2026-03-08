@@ -40,6 +40,7 @@ Notes:
 [CmdletBinding()]
 param(
   [string]$NextScriptSet = "default",
+  [string]$SetupScript = "C:\Setup\win11\setup.ps1",
   [int]$DelaySeconds = 3,
   [switch]$PreviewOnly
 )
@@ -62,20 +63,19 @@ Write-Host "=============================================================="
 Write-Host ""
 
 $runOncePath = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce'
-$setupScript = 'C:\Setup\win11\setup.ps1'
 
-if (-not (Test-Path -Path $setupScript)) {
-    throw "setup.ps1 not found at $setupScript"
+if (-not (Test-Path -Path $SetupScript)) {
+    throw "setup.ps1 not found at $SetupScript"
 }
 
 if ([string]::IsNullOrWhiteSpace($NextScriptSet)) {
     throw "NextScriptSet cannot be empty."
 }
 
-$resumeCommand = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$setupScript`" -ScriptSet $NextScriptSet"
+$resumeCommand = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$SetupScript`" -ScriptSet $NextScriptSet"
 
 Write-Host "Execution plan:"
-Write-Host "1) Ensure setup script exists: $setupScript"
+Write-Host "1) Ensure setup script exists: $SetupScript"
 Write-Host "2) Write RunOnce value: HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce\ResumeWin11Setup"
 Write-Host "3) Value command: $resumeCommand"
 Write-Host "4) Wait $DelaySeconds second(s)"

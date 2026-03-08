@@ -49,9 +49,15 @@ rsync -av ./ "$ISO_ROOT/repo/" \
   --exclude '*.iso' \
   --exclude '*.zip'
 
-# Dowload winget update
-wget -O "$ISO_ROOT/media/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" \
-  https://github.com/microsoft/winget-cli/releases/download/v1.28.190/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+# Download and extract AutoLogon tool from Sysinternals
+# curl -fsSL \
+#   https://download.sysinternals.com/files/AutoLogon.zip \
+#   -o "$ISO_ROOT/tools/AutoLogon.zip"
+
+# unzip -o "$ISO_ROOT/tools/AutoLogon.zip" -d "$ISO_ROOT/tools"
+# find "$ISO_ROOT/tools" -type f ! -name 'Autologon.exe' -delete
+# find "$ISO_ROOT/tools" -mindepth 1 -type d -empty -delete
+# rm -f "$ISO_ROOT/tools/AutoLogon.zip"
 
 # Create the ISO image
 genisoimage \

@@ -29,21 +29,26 @@ $ScriptSets = @{
         @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"; SetupScript = "C:\source\win11\setup.ps1" } }
     )
 
-    # Running scripts from souce at this point to allow iteration without needing to copy to ISO for each change.
     secondReboot = @(
-        @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"} }
-        @{ File = "git-config.ps1"}
-        @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
+        # Running scripts from souce at this point to allow iteration without needing to copy to ISO for each change.
         @{ File = "winget-update.ps1"}
+        @{ File = "template.ps1"; Params = @{ ScriptSet = "firstReboot";} }
         @{ File = "winget-configure-enable.ps1"}
         @{ File = "winget-configure-baseline.ps1"}
+        @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
+        @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"; SetupScript = "C:\Setup\win11\setup.ps1" } }
         @{ File = "vscodemenu.ps1"}
-        @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "thirdReboot"; SetupScript = "C:\Setup\win11\setup.ps1" } }
+        @{ File = "git-config.ps1"}
+        @{ File = "git-clone.ps1"}
+        # @{ File = "template.ps1"; Params = @{ ScriptSet = "default"} }
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "firstReboot"; PreviewOnly = $true } }
+        # @{ File = "runonce.ps1"; Params = @{ NextScriptSet = "secondReboot"} }
+        # @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "1" } }
+        # @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"; TestParam = "2" } }
     )
 
     thirdReboot = @(
         @{ File = "template.ps1"; Params = @{ ScriptSet = "thirdReboot"} }
-        #@{ File = "runonce.ps1"; Params = @{ NextScriptSet = "fourthReboot"; SetupScript = "C:\Setup\win11\setup.ps1" } }
     )
 
     fourthReboot = @(

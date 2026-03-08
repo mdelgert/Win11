@@ -53,6 +53,13 @@ rsync -av ./ "$ISO_ROOT/repo/" \
 wget -O "$ISO_ROOT/media/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" \
   https://github.com/microsoft/winget-cli/releases/download/v1.28.190/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 
+wget -O "$ISO_ROOT/media/DesktopAppInstaller_Dependencies.zip" \
+  https://github.com/microsoft/winget-cli/releases/download/v1.28.190/DesktopAppInstaller_Dependencies.zip
+
+unzip -o "$ISO_ROOT/media/DesktopAppInstaller_Dependencies.zip" -d "$ISO_ROOT/media"
+
+rm -f "$ISO_ROOT/media/DesktopAppInstaller_Dependencies.zip"
+
 # Create the ISO image
 genisoimage \
   -o unattend.iso \
@@ -66,6 +73,6 @@ sha256sum unattend.iso > unattend.iso.sha256
 # Test running the script without errors and that the expected files are created. In a real test, you would want to mount the ISO and verify its contents.
 # chmod +x ./scripts/build-unattend-iso.sh
 # ./scripts/build-unattend-iso.sh
-#cp unattend.iso ../
-#rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
+# cp unattend.iso ../
+# rm -rf "$ISO_ROOT" unattend.iso unattend.iso.sha256 unattend.version.txt
 #########################################################################################################

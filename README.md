@@ -47,6 +47,7 @@ git clone git@github.com:mdelgert/win11.git
 - [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall)
 - [WinGet Configurations](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)
 - [WinGet Samples](https://github.com/microsoft/winget-dsc/blob/main/samples/Configuration%20files/Learn%20tutorials/WinUI/winui-config.winget)
+- [PowerShell Gallery](https://www.powershellgallery.com/)
 - [WinGet DSC Configure Guide](https://woshub.com/winget-dsc-configure/)
 - [Any Burn](https://anyburn.com/download.php)
 

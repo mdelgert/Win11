@@ -36,6 +36,10 @@ try {
 
     $installerPath = Join-Path -Path $isoRoot -ChildPath "media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 
+    # Print the installer path for logging purposes
+    Write-Host "Located ISO media root at: $isoRoot"
+    Write-Host "Expected installer path: $installerPath"
+
     if (-not (Test-Path -Path $installerPath)) {
         throw "Installer not found: $installerPath"
     }

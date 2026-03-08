@@ -17,9 +17,10 @@ function Get-IsoRoot {
     $drives = Get-PSDrive -PSProvider FileSystem
 
     foreach ($drive in $drives) {
-        $versionMarker = Join-Path $drive.Root "unattend.version.txt"
+        $autounattendFile = Join-Path -Path $drive.Root -ChildPath "autounattend.xml"
+        $versionMarker = Join-Path -Path $drive.Root -ChildPath "unattend.version.txt"
         
-        if (Test-Path -Path $versionMarker) {
+        if ((Test-Path -Path $autounattendFile) -and (Test-Path -Path $versionMarker)) {
             return $drive.Root
         }
     }
@@ -27,10 +28,14 @@ function Get-IsoRoot {
     return $null
 }
 
-$isoRoot = Get-IsoRoot
-$installerPath = Join-Path $isoRoot "media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
-
 try {
+    $isoRoot = Get-IsoRoot
+    if ([string]::IsNullOrWhiteSpace($isoRoot)) {
+        throw "Could not locate ISO media root. Expected to find both 'autounattend.xml' and 'unattend.version.txt' on a mounted drive."
+    }
+
+    $installerPath = Join-Path -Path $isoRoot -ChildPath "media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+
     if (-not (Test-Path -Path $installerPath)) {
         throw "Installer not found: $installerPath"
     }

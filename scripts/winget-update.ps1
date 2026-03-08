@@ -19,7 +19,7 @@ function Get-IsoRoot {
     foreach ($drive in $drives) {
         $autounattendFile = Join-Path -Path $drive.Root -ChildPath "autounattend.xml"
         $versionMarker = Join-Path -Path $drive.Root -ChildPath "unattend.version.txt"
-        
+
         if ((Test-Path -Path $autounattendFile) -and (Test-Path -Path $versionMarker)) {
             return $drive.Root
         }
@@ -34,18 +34,52 @@ try {
         throw "Could not locate ISO media root. Expected to find both 'autounattend.xml' and 'unattend.version.txt' on a mounted drive."
     }
 
-    $installerPath = Join-Path -Path $isoRoot -ChildPath "media\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    $mediaRoot = Join-Path -Path $isoRoot -ChildPath "media"
+    $x64Root   = Join-Path -Path $mediaRoot -ChildPath "x64"
 
-    # Print the installer path for logging purposes
+    $installerPath = Join-Path -Path $mediaRoot -ChildPath "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    $winAppRuntime = Join-Path -Path $x64Root   -ChildPath "Microsoft.WindowsAppRuntime.1.8_8000.616.304.0_x64.appx"
+    $vclibsUwp     = Join-Path -Path $x64Root   -ChildPath "Microsoft.VCLibs.140.00.UWPDesktop_14.0.33728.0_x64.appx"
+    $vclibsDesktop = Join-Path -Path $x64Root   -ChildPath "Microsoft.VCLibs.140.00_14.0.33519.0_x64.appx"
+
     Write-Host "Located ISO media root at: $isoRoot"
-    Write-Host "Expected installer path: $installerPath"
+    Write-Host "Installer path: $installerPath"
+    Write-Host "Dependency path 1: $winAppRuntime"
+    Write-Host "Dependency path 2: $vclibsUwp"
+    Write-Host "Dependency path 3: $vclibsDesktop"
 
     if (-not (Test-Path -Path $installerPath)) {
         throw "Installer not found: $installerPath"
     }
 
+    $dependencyPaths = @()
+
+    if (Test-Path -Path $winAppRuntime) {
+        $dependencyPaths += $winAppRuntime
+    }
+
+    if (Test-Path -Path $vclibsUwp) {
+        $dependencyPaths += $vclibsUwp
+    }
+
+    if (Test-Path -Path $vclibsDesktop) {
+        $dependencyPaths += $vclibsDesktop
+    }
+
+    if ($dependencyPaths.Count -eq 0) {
+        throw "No dependency packages were found under: $x64Root"
+    }
+
     Write-Host "Installing Winget silently from: $installerPath"
-    Add-AppxPackage -Path $installerPath -ForceApplicationShutdown -ForceUpdateFromAnyVersion -ErrorAction Stop
+    Write-Host "Using dependencies:"
+    $dependencyPaths | ForEach-Object { Write-Host "  $_" }
+
+    Add-AppxPackage `
+        -Path $installerPath `
+        -DependencyPath $dependencyPaths `
+        -ForceApplicationShutdown `
+        -ForceUpdateFromAnyVersion `
+        -ErrorAction Stop
 
     $wingetCommand = Get-Command -Name winget.exe -ErrorAction SilentlyContinue
     if ($wingetCommand) {

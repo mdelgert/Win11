@@ -32,8 +32,8 @@ $ScriptSets = @{
     # Running scripts from souce at this point to allow iteration without needing to copy to ISO for each change.
     secondReboot = @(
         @{ File = "template.ps1"; Params = @{ ScriptSet = "secondReboot"} }
-        #@{ File = "git-config.ps1"}
-        #@{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
+        @{ File = "git-config.ps1"}
+        @{ File = "ssh-server.ps1"; Params = @{ GitHubUsername = "mdelgert"; TargetUsername = "mdelgert"}}
         @{ File = "winget-update.ps1"}
         @{ File = "winget-configure-enable.ps1"}
         @{ File = "winget-configure-baseline.ps1"}

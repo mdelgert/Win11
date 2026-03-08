@@ -17,7 +17,7 @@ function Get-IsoRoot {
     $drives = Get-PSDrive -PSProvider FileSystem
 
     foreach ($drive in $drives) {
-        $versionMarker = Join-Path $drive.Root "media.version.txt"
+        $versionMarker = Join-Path $drive.Root "unattend.version.txt"
         
         if (Test-Path -Path $versionMarker) {
             return $drive.Root

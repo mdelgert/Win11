@@ -11,8 +11,6 @@ Write-Host "User: $env:USERNAME"
 Write-Host "Time: $(Get-Date)"
 Write-Host "OS Version: $([Environment]::OSVersion.Version)"
 Write-Host "Working directory: $(Get-Location)"
-Write-Host "ScriptSet: $ScriptSet"
-Write-Host "TestParam: $TestParam"
 Write-Host "=============================================================="
 Write-Host ""
 

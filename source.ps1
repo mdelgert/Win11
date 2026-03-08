@@ -14,7 +14,7 @@ Write-Host "Working directory: $(Get-Location)"
 Write-Host "=============================================================="
 Write-Host ""
 
-$localSetupScript = "C:\Setup\win11\setup.ps1"
+$localSetupScript = "C:\source\win11\setup.ps1"
 
 git pull
 

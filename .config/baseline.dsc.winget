@@ -27,11 +27,11 @@ properties:
         id: Microsoft.Sysinternals.Autologon
         source: winget
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: ActiveBackupForBusinessAgent
-      settings:
-        id: Synology.ActiveBackupForBusinessAgent
-        source: winget
+    # - resource: Microsoft.WinGet.DSC/WinGetPackage
+    #   id: ActiveBackupForBusinessAgent
+    #   settings:
+    #     id: Synology.ActiveBackupForBusinessAgent
+    #     source: winget
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: GSUDO
